@@ -4,18 +4,18 @@ import {
 } from "react-router-dom";
 
 import Login from "./pages/Login";
-
 import Signup from "./pages/Signup";
-
 import Dashboard from "./pages/Dashboard";
-
 import Products from "./pages/Products";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
 
   return (
 
+    
     <Routes>
+        {/* Public Routes */}
 
       <Route
         path="/login"
@@ -27,14 +27,24 @@ function App() {
         element={<Signup />}
       />
 
-      <Route
+       {/* Protected Routes */}
+
+       <Route
         path="/dashboard"
-        element={<Dashboard />}
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
       />
 
       <Route
         path="/products"
-        element={<Products />}
+        element={
+          <ProtectedRoute>
+            <Products />
+          </ProtectedRoute>
+        }
       />
 
     </Routes>
