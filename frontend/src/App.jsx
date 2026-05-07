@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import AddProduct from "./pages/AddProduct";
+import EditProduct from "./pages/EditProduct";
 
 function App() {
 
@@ -54,6 +55,15 @@ function App() {
   element={
     <ProtectedRoute>
       <AddProduct />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/edit-product/:id"
+  element={
+    <ProtectedRoute>
+      <EditProduct />
     </ProtectedRoute>
   }
 />
