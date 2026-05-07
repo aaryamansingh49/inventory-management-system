@@ -72,6 +72,26 @@ const getAllProducts = async (req, res) => {
 
     try {
   
+      // Pagination
+      const page = parseInt(req.query.page) || 1;
+  
+      const limit = parseInt(req.query.limit) || 5;
+  
+      const offset = (page - 1) * limit;
+  
+      // Search
+      const search = req.query.search || "";
+  
+      // Total count
+      const totalProducts = await pool.query(
+        `
+        SELECT COUNT(*) FROM products
+        WHERE name ILIKE $1
+        `,
+        [`%${search}%`]
+      );
+  
+      // Fetch products
       const products = await pool.query(
         `
         SELECT
@@ -88,12 +108,31 @@ const getAllProducts = async (req, res) => {
         LEFT JOIN categories
         ON products.category_id = categories.id
   
+        WHERE products.name ILIKE $1
+  
         ORDER BY products.id DESC
-        `
+  
+        LIMIT $2 OFFSET $3
+        `,
+        [
+          `%${search}%`,
+          limit,
+          offset
+        ]
       );
   
       res.status(200).json({
+  
+        total: parseInt(totalProducts.rows[0].count),
+  
+        currentPage: page,
+  
+        totalPages: Math.ceil(
+          totalProducts.rows[0].count / limit
+        ),
+  
         products: products.rows
+  
       });
   
     } catch (error) {
