@@ -3,11 +3,13 @@ import {
   Route
 } from "react-router-dom";
 
+//Pages
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import AddProduct from "./pages/AddProduct";
 
 function App() {
 
@@ -46,6 +48,15 @@ function App() {
           </ProtectedRoute>
         }
       />
+
+<Route
+  path="/add-product"
+  element={
+    <ProtectedRoute>
+      <AddProduct />
+    </ProtectedRoute>
+  }
+/>
 
     </Routes>
 
