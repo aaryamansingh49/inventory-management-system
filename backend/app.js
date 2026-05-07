@@ -9,8 +9,10 @@ const purchaseRoutes = require("./routes/purchaseRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
+const apiLimiter = require("./middlewares/rateLimitMiddleware");
 
 const app = express();
+app.use(apiLimiter);
 
 app.use(cors());
 app.use(helmet());
