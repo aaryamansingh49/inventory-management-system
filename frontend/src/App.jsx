@@ -11,6 +11,7 @@ import Products from "./pages/Products";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
+import Orders from "./pages/Orders";
 
 function App() {
 
@@ -64,6 +65,15 @@ function App() {
   element={
     <ProtectedRoute>
       <EditProduct />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/orders"
+  element={
+    <ProtectedRoute>
+      <Orders />
     </ProtectedRoute>
   }
 />
