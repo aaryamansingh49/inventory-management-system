@@ -16,6 +16,9 @@ import {
   
     const [selectedItems, setSelectedItems] =
       useState([]);
+
+      const [recentOrders, setRecentOrders] =
+  useState([]);
   
     // Fetch products
     const getProducts = async () => {
@@ -35,6 +38,28 @@ import {
       }
   
     };
+
+    //Recent Orders
+
+    const getRecentOrders = async () => {
+
+        try {
+      
+          const response = await api.get(
+            "/dashboard/recent-orders"
+          );
+      
+          setRecentOrders(
+            response.data.recentOrders
+          );
+      
+        } catch (error) {
+      
+          console.log(error);
+      
+        }
+      
+      };
   
     // Add product to order
     const addProduct = () => {
@@ -100,6 +125,56 @@ import {
       );
   
     };
+
+
+    const downloadInvoice = async (
+        orderId
+      ) => {
+      
+        try {
+      
+          const response = await api.get(
+      
+            `/invoices/${orderId}`,
+      
+            {
+              responseType: "blob"
+            }
+      
+          );
+      
+          // Create file URL
+          const url =
+            window.URL.createObjectURL(
+              new Blob([response.data])
+            );
+      
+          // Create link
+          const link =
+            document.createElement("a");
+      
+          link.href = url;
+      
+          link.setAttribute(
+            "download",
+            `invoice-${orderId}.pdf`
+          );
+      
+          document.body.appendChild(link);
+      
+          link.click();
+      
+          link.remove();
+      
+        } catch (error) {
+      
+          console.log(error);
+      
+          alert("Invoice download failed");
+      
+        }
+      
+      };
   
     // Submit order
     const handleSubmit = async (e) => {
@@ -123,6 +198,8 @@ import {
         setCustomerName("");
   
         setSelectedItems([]);
+
+        getRecentOrders();
   
       } catch (error) {
   
@@ -139,6 +216,7 @@ import {
     useEffect(() => {
   
       getProducts();
+      getRecentOrders();
   
     }, []);
   
@@ -271,6 +349,102 @@ import {
           </button>
   
         </form>
+
+        <hr
+  style={{
+    margin: "40px 0"
+  }}
+/>
+
+<h2>Recent Orders</h2>
+
+<table
+  border="1"
+  width="100%"
+  cellPadding="10"
+  style={{
+    background: "white"
+  }}
+>
+
+  <thead>
+
+    <tr>
+
+      <th>ID</th>
+
+      <th>Customer</th>
+
+      <th>Total</th>
+
+      <th>Status</th>
+
+      <th>Date</th>
+
+      <th>Invoice</th>
+
+    </tr>
+
+  </thead>
+
+  <tbody>
+
+    {recentOrders.map((order) => (
+
+      <tr key={order.id}>
+
+        <td>{order.id}</td>
+
+        <td>
+          {order.customer_name}
+        </td>
+
+        <td>
+          ₹{order.total_amount}
+        </td>
+
+        <td>
+          {order.status}
+        </td>
+
+        <td>
+          {
+            new Date(
+              order.order_date
+            ).toLocaleDateString()
+          }
+        </td>
+
+        <td>
+
+        <button
+  onClick={() =>
+    downloadInvoice(order.id)
+  }
+>
+
+  Download Invoice
+
+</button>
+
+          {/* <a
+            href={`http://localhost:5000/api/invoices/${order.id}`}
+            target="_blank"
+          >
+
+            Download Invoice
+
+          </a> */}
+
+        </td>
+
+      </tr>
+
+    ))}
+
+  </tbody>
+
+</table>
   
       </MainLayout>
   
