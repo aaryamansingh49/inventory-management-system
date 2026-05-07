@@ -2,11 +2,17 @@ import { Link, useNavigate } from "react-router-dom";
 
 function MainLayout({ children }) {
   const navigate = useNavigate();
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
+  
+  const role = user?.role;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
 
     localStorage.removeItem("user");
+    
 
     navigate("/login");
   };
@@ -49,12 +55,17 @@ function MainLayout({ children }) {
               Products
             </Link>
           </li>
-
+       
+       {
+        role === "admin" && (
+       
           <li>
             <Link to="/add-product" style={linkStyle}>
               Add Product
             </Link>
           </li>
+          )
+          }
 
           <li>
             <Link to="/orders" style={linkStyle}>

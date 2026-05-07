@@ -6,7 +6,6 @@ import MainLayout from "../layouts/MainLayout";
 import api from "../services/api";
 
 function Products() {
-    const navigate = useNavigate();
   const [products, setProducts] = useState([]);
 
   const [search, setSearch] = useState("");
@@ -14,6 +13,11 @@ function Products() {
   const [page, setPage] = useState(1);
 
   const [totalPages, setTotalPages] = useState(1);
+
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const role = user?.role;
 
   // Fetch products
   const getProducts = async () => {
@@ -109,18 +113,24 @@ function Products() {
               <td>{product.category_name}</td>
 
               <td>
-                <button onClick={() => navigate(`/edit-product/${product.id}`)}>
-                  Edit
-                </button>
+                {role === "admin" && (
+                  <>
+                    <button
+                      onClick={() => navigate(`/edit-product/${product.id}`)}
+                    >
+                      Edit
+                    </button>
 
-                <button
-                  onClick={() => deleteProduct(product.id)}
-                  style={{
-                    marginLeft: "10px",
-                  }}
-                >
-                  Delete
-                </button>
+                    <button
+                      onClick={() => deleteProduct(product.id)}
+                      style={{
+                        marginLeft: "10px",
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
               </td>
             </tr>
           ))}
