@@ -87,6 +87,15 @@ function MainLayout({ children }) {
     Purchases
   </Link>
 </li>
+
+<li>
+  <Link
+    to="/inventory"
+    style={linkStyle}
+  >
+    Inventory
+  </Link>
+</li>
         </ul>
 
         <button

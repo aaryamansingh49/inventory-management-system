@@ -14,6 +14,7 @@ import EditProduct from "./pages/EditProduct";
 import Orders from "./pages/Orders";
 import Suppliers from "./pages/Suppliers";
 import Purchases from "./pages/Purchases";
+import Inventory from "./pages/Inventory";
 
 function App() {
 
@@ -94,6 +95,15 @@ function App() {
   element={
     <ProtectedRoute>
       <Purchases />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/inventory"
+  element={
+    <ProtectedRoute>
+      <Inventory />
     </ProtectedRoute>
   }
 />
