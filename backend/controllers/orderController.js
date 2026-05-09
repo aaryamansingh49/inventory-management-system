@@ -11,12 +11,68 @@ const createOrder = async (req, res) => {
       items
     } = req.body;
 
+    if (!customer_name || !customer_name.trim()) {
+
+      return res.status(400).json({
+        message: "Customer name is required"
+      });
+    
+    }
+    
+    if (!items || items.length === 0) {
+    
+      return res.status(400).json({
+        message:
+          "At least one product is required"
+      });
+    
+    }
+
+
+
+    const uniqueProducts = new Set();
+
+for (const item of items) {
+
+  if (
+    uniqueProducts.has(item.product_id)
+  ) {
+
+    return res.status(400).json({
+      message:
+        "Duplicate products are not allowed"
+    });
+
+  }
+
+  uniqueProducts.add(item.product_id);
+
+}
    
 
     // Start transaction
     await client.query("BEGIN");
-
+    const productMap = {};
     let totalAmount = 0;
+
+
+    for (const item of items) {
+
+      if (!item.product_id) {
+    
+        throw new Error(
+          "Product is required"
+        );
+    
+      }
+    
+      if (item.quantity <= 0) {
+    
+        throw new Error("Invalid Quantity");
+    
+      }
+    
+    }
 
     // Lock products & validate stock
     for (const item of items) {
@@ -33,6 +89,10 @@ const createOrder = async (req, res) => {
 
       const product = productResult.rows[0];
 
+   
+
+      productMap[item.product_id] = product;
+
       if (!product) {
 
         throw new Error("Product not found");
@@ -42,13 +102,11 @@ const createOrder = async (req, res) => {
       // Check stock
       if (product.stock < item.quantity) {
 
-        throw new Error(
-          `Insufficient stock for ${product.name}`
-        );
+        throw new Error(`Insufficient stock for ${product.name}`);
 
       }
 
-      totalAmount += item.quantity * item.price;
+      totalAmount += item.quantity * product.price;
 
     }
 
@@ -72,7 +130,8 @@ const createOrder = async (req, res) => {
 
     // Process items
     for (const item of items) {
-
+      const product =
+      productMap[item.product_id];
       // Insert order item
       await client.query(
         `
@@ -85,7 +144,7 @@ const createOrder = async (req, res) => {
           orderId,
           item.product_id,
           item.quantity,
-          item.price
+          product.price
         ]
       );
 
@@ -135,7 +194,7 @@ const createOrder = async (req, res) => {
 
     console.log(error);
 
-    res.status(500).json({
+    res.status(400).json({
       message: error.message
     });
 

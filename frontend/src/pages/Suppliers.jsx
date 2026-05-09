@@ -22,6 +22,12 @@ import {
         address: ""
   
       });
+
+      const user = JSON.parse(
+        localStorage.getItem("user")
+      );
+      
+      const role = user?.role;
   
     // Handle input
     const handleChange = (e) => {
@@ -109,6 +115,10 @@ import {
         <h1>Suppliers</h1>
   
         {/* Form */}
+
+        {
+            role === "admin" && (
+        
   
         <form
           onSubmit={handleSubmit}
@@ -155,6 +165,8 @@ import {
           </button>
   
         </form>
+    )
+}
   
         {/* Table */}
   

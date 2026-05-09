@@ -78,6 +78,15 @@ function MainLayout({ children }) {
               Suppliers
             </Link>
           </li>
+
+          <li>
+  <Link
+    to="/purchases"
+    style={linkStyle}
+  >
+    Purchases
+  </Link>
+</li>
         </ul>
 
         <button

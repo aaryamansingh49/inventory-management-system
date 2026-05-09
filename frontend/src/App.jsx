@@ -13,6 +13,7 @@ import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
 import Orders from "./pages/Orders";
 import Suppliers from "./pages/Suppliers";
+import Purchases from "./pages/Purchases";
 
 function App() {
 
@@ -84,6 +85,15 @@ function App() {
   element={
     <ProtectedRoute>
       <Suppliers />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/purchases"
+  element={
+    <ProtectedRoute>
+      <Purchases />
     </ProtectedRoute>
   }
 />

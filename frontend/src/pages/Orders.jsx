@@ -180,6 +180,46 @@ import {
     const handleSubmit = async (e) => {
   
       e.preventDefault();
+
+      //customer validation
+
+      if (!customerName.trim()) {
+
+        return alert(
+          "Customer name is required"
+        );
+      
+      }
+      
+      if (selectedItems.length === 0) {
+      
+        return alert(
+          "Please add at least one product"
+        );
+      
+      }
+
+      //product validation
+
+      for (const item of selectedItems) {
+
+        if (!item.product_id) {
+      
+          return alert(
+            "Please select a product"
+          );
+      
+        }
+      
+        if (item.quantity <= 0) {
+      
+          return alert(
+            "Quantity must be greater than 0"
+          );
+      
+        }
+      
+      }
   
       try {
   
