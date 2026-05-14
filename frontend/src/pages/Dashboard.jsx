@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
-
 import MainLayout from "../layouts/MainLayout";
-
+import "../styles/dashboard.css";
+import "../styles/table.css";
 import api from "../services/api";
+
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer
+} from "recharts";
 
 function Dashboard() {
 
@@ -12,11 +22,16 @@ function Dashboard() {
 
     totalOrders: 0,
 
+    totalSuppliers: 0,
+
     totalRevenue: 0,
 
     lowStockItems: 0
 
   });
+
+  const [analytics, setAnalytics] =
+  useState([]);
 
   const getDashboardStats = async () => {
 
@@ -36,95 +51,146 @@ function Dashboard() {
 
   };
 
+
+  const getAnalytics = async () => {
+
+    try {
+  
+      const response = await api.get(
+        "/dashboard/sales-analytics"
+      );
+  
+      setAnalytics(
+        response.data.analytics
+      );
+  
+    } catch (error) {
+  
+      console.log(error);
+  
+    }
+  
+  };
+
   useEffect(() => {
 
     getDashboardStats();
+    getAnalytics();
 
   }, []);
+
+
 
   return (
 
     <MainLayout>
-
+  
       <h1>Dashboard</h1>
-
-      <div style={{
-        display: "grid",
-        gridTemplateColumns:
-          "repeat(4, 1fr)",
-        gap: "20px",
-        marginTop: "20px"
-      }}>
-
-        {/* Card 1 */}
-
-        <div style={cardStyle}>
-
+  
+      {/* Dashboard Cards */}
+  
+      <div className="dashboard-cards">
+  
+        {/* Products */}
+  
+        <div className="dashboard-card">
+  
           <h3>Total Products</h3>
-
+  
           <h1>
             {stats.totalProducts}
           </h1>
-
+  
         </div>
-
-        {/* Card 2 */}
-
-        <div style={cardStyle}>
-
+  
+        {/* Orders */}
+  
+        <div className="dashboard-card">
+  
           <h3>Total Orders</h3>
-
+  
           <h1>
             {stats.totalOrders}
           </h1>
-
+  
         </div>
-
-        {/* Card 3 */}
-
-        <div style={cardStyle}>
-
+  
+        {/* Suppliers */}
+  
+        <div className="dashboard-card">
+  
+          <h3>Total Suppliers</h3>
+  
+          <h1>
+            {stats.totalSuppliers}
+          </h1>
+  
+        </div>
+  
+        {/* Revenue */}
+  
+        <div className="dashboard-card">
+  
           <h3>Total Revenue</h3>
-
+  
           <h1>
             ₹{stats.totalRevenue}
           </h1>
-
+  
         </div>
-
-        {/* Card 4 */}
-
-        <div style={cardStyle}>
-
+  
+        {/* Low Stock */}
+  
+        <div className="dashboard-card">
+  
           <h3>Low Stock Items</h3>
-
+  
           <h1>
             {stats.lowStockItems}
           </h1>
-
+  
         </div>
-
+  
       </div>
-
+  
+      {/* Sales Analytics */}
+  
+      <div className="dashboard-section">
+  
+        <h2>Sales Analytics</h2>
+  
+        <ResponsiveContainer
+          width="100%"
+          height={300}
+        >
+  
+          <LineChart data={analytics}>
+  
+            <CartesianGrid strokeDasharray="3 3" />
+  
+            <XAxis dataKey="date" />
+  
+            <YAxis />
+  
+            <Tooltip />
+  
+            <Line
+              type="monotone"
+              dataKey="total_sales"
+            />
+  
+          </LineChart>
+  
+        </ResponsiveContainer>
+  
+      </div>
+  
     </MainLayout>
-
+  
   );
 
 }
 
-const cardStyle = {
 
-  background: "white",
-
-  padding: "20px",
-
-  borderRadius: "10px",
-
-  boxShadow:
-    "0px 2px 10px rgba(0,0,0,0.1)",
-
-  textAlign: "center"
-
-};
 
 export default Dashboard;

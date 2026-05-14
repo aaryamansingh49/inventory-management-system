@@ -3,6 +3,9 @@ import {
     useState
   } from "react";
   
+  import "../styles/table.css";
+  import "../styles/dashboard.css";
+  
   import MainLayout from "../layouts/MainLayout";
   
   import api from "../services/api";
@@ -12,17 +15,28 @@ import {
     const [history, setHistory] =
       useState([]);
   
+    const [page, setPage] =
+      useState(1);
+  
+    const [totalPages, setTotalPages] =
+      useState(1);
+  
     // Fetch history
+  
     const getHistory = async () => {
   
       try {
   
         const response = await api.get(
-          "/inventory/history"
+          `/inventory/history?page=${page}`
         );
   
         setHistory(
           response.data.history
+        );
+  
+        setTotalPages(
+          response.data.totalPages
         );
   
       } catch (error) {
@@ -37,78 +51,162 @@ import {
   
       getHistory();
   
-    }, []);
+    }, [page]);
   
     return (
   
       <MainLayout>
   
-        <h1>Inventory History</h1>
+        <div className="dashboard-section">
   
-        <table
-          border="1"
-          width="100%"
-          cellPadding="10"
-          style={{
-            background: "white"
-          }}
-        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent:
+                "space-between",
+              alignItems: "center",
+              marginBottom: "20px"
+            }}
+          >
   
-          <thead>
+            <h1>
   
-            <tr>
+              Inventory History
   
-              <th>ID</th>
+            </h1>
   
-              <th>Product</th>
+            <div
+              style={{
+                fontWeight: "bold",
+                color: "#2563eb"
+              }}
+            >
   
-              <th>Action</th>
+              Page {page} of {totalPages}
   
-              <th>Quantity</th>
+            </div>
   
-              <th>Date</th>
+          </div>
   
-            </tr>
+          <table className="custom-table">
   
-          </thead>
+            <thead>
   
-          <tbody>
+              <tr>
   
-            {history.map((item) => (
+                <th>ID</th>
   
-              <tr key={item.id}>
+                <th>Product</th>
   
-                <td>{item.id}</td>
+                <th>Action</th>
   
-                <td>
-                  {item.product_name}
-                </td>
+                <th>Quantity</th>
   
-                <td>
-                  {item.action}
-                </td>
-  
-                <td>
-                  {item.quantity}
-                </td>
-  
-                <td>
-  
-                  {
-                    new Date(
-                      item.created_at
-                    ).toLocaleString()
-                  }
-  
-                </td>
+                <th>Date</th>
   
               </tr>
   
-            ))}
+            </thead>
   
-          </tbody>
+            <tbody>
   
-        </table>
+              {history.map((item) => (
+  
+                <tr key={item.id}>
+  
+                  <td>{item.id}</td>
+  
+                  <td>
+                    {item.product_name}
+                  </td>
+  
+                  <td>
+  
+                    {
+  
+                      item.action === "SALE"
+  
+                        ? "🔻 SALE"
+  
+                        : "🟢 PURCHASE"
+  
+                    }
+  
+                  </td>
+  
+                  <td>
+                    {item.quantity}
+                  </td>
+  
+                  <td>
+  
+                    {
+                      new Date(
+                        item.created_at
+                      ).toLocaleString()
+                    }
+  
+                  </td>
+  
+                </tr>
+  
+              ))}
+  
+            </tbody>
+  
+          </table>
+  
+          {/* Pagination */}
+  
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "15px",
+              marginTop: "25px"
+            }}
+          >
+  
+            <button
+              className="primary-btn"
+              disabled={page === 1}
+              onClick={() =>
+                setPage(page - 1)
+              }
+            >
+  
+              Prev
+  
+            </button>
+  
+            <span
+              style={{
+                fontWeight: "bold"
+              }}
+            >
+  
+              Page {page}
+  
+            </span>
+  
+            <button
+              className="primary-btn"
+              disabled={
+                page === totalPages
+              }
+              onClick={() =>
+                setPage(page + 1)
+              }
+            >
+  
+              Next
+  
+            </button>
+  
+          </div>
+  
+        </div>
   
       </MainLayout>
   

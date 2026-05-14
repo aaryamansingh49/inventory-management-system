@@ -2,7 +2,9 @@ import {
   useEffect,
   useState
 } from "react";
-
+import "../styles/forms.css";
+import "../styles/table.css";
+import "../styles/dashboard.css";
 import MainLayout from "../layouts/MainLayout";
 
 import api from "../services/api";
@@ -48,7 +50,7 @@ function Purchases() {
     try {
 
       const response = await api.get(
-        "/products"
+        "/products/all"
       );
 
       setProducts(
@@ -190,165 +192,189 @@ function Purchases() {
   return (
 
     <MainLayout>
-
-      <h1>Purchases</h1>
-
-      <form onSubmit={handleSubmit}>
-
-        {/* Supplier Dropdown */}
-
-        <select
-          value={supplierId}
-          onChange={(e) =>
-            setSupplierId(
-              e.target.value
-            )
-          }
-          style={inputStyle}
+  
+      <div className="dashboard-section">
+  
+        <h1
+          style={{
+            marginBottom: "20px"
+          }}
         >
-
-          <option value="">
-            Select Supplier
-          </option>
-
-          {suppliers.map(
-            (supplier) => (
-
-              <option
-                key={supplier.id}
-                value={supplier.id}
-              >
-                {
-                  supplier.supplier_name
-                }
-              </option>
-
-            )
-          )}
-
-        </select>
-
-        <br /><br />
-
-        {/* Add Item */}
-
-        <button
-          type="button"
-          onClick={addItem}
-        >
-
-          Add Product
-
-        </button>
-
-        <br /><br />
-
-        {/* Product Rows */}
-
-        {items.map(
-          (item, index) => (
-
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                gap: "10px",
-                marginBottom: "15px"
-              }}
+  
+          Purchases
+  
+        </h1>
+  
+        <form onSubmit={handleSubmit}>
+  
+          {/* Supplier Dropdown */}
+  
+          <div className="form-group">
+  
+            <select
+              value={supplierId}
+              onChange={(e) =>
+                setSupplierId(
+                  e.target.value
+                )
+              }
+              className="form-input"
             >
-
-              {/* Product */}
-
-              <select
-                value={item.product_id}
-                onChange={(e) =>
-                  handleItemChange(
-                    index,
-                    "product_id",
-                    e.target.value
-                  )
-                }
-                style={inputStyle}
+  
+              <option value="">
+                Select Supplier
+              </option>
+  
+              {suppliers.map(
+                (supplier) => (
+  
+                  <option
+                    key={supplier.id}
+                    value={supplier.id}
+                  >
+  
+                    {
+                      supplier.supplier_name
+                    }
+  
+                  </option>
+  
+                )
+              )}
+  
+            </select>
+  
+          </div>
+  
+          {/* Add Product */}
+  
+          <button
+            type="button"
+            onClick={addItem}
+            className="primary-btn"
+            style={{
+              marginBottom: "20px"
+            }}
+          >
+  
+            Add Product
+  
+          </button>
+  
+          {/* Product Rows */}
+  
+          {items.map(
+            (item, index) => (
+  
+              <div
+                key={index}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns:
+                    "2fr 1fr 1fr",
+                  gap: "15px",
+                  marginBottom: "20px"
+                }}
               >
-
-                <option value="">
-                  Select Product
-                </option>
-
-                {products.map(
-                  (product) => (
-
-                    <option
-                      key={product.id}
-                      value={product.id}
-                    >
-                      {product.name}
-                    </option>
-
-                  )
-                )}
-
-              </select>
-
-              {/* Quantity */}
-
-              <input
-                type="number"
-                value={item.quantity}
-                onChange={(e) =>
-                  handleItemChange(
-                    index,
-                    "quantity",
-                    Number(
+  
+                {/* Product */}
+  
+                <select
+                  value={item.product_id}
+                  onChange={(e) =>
+                    handleItemChange(
+                      index,
+                      "product_id",
                       e.target.value
                     )
-                  )
-                }
-                placeholder="Quantity"
-                style={inputStyle}
-              />
-
-              {/* Price */}
-
-              <input
-                type="number"
-                value={item.price}
-                readOnly
-                style={inputStyle}
-              />
-
-            </div>
-
-          )
-        )}
-
-        {/* Total */}
-
-        <h2>
-          Total: ₹
-          {calculateTotal()}
-        </h2>
-
-        <button type="submit">
-
-          Create Purchase
-
-        </button>
-
-      </form>
-
+                  }
+                  className="form-input"
+                >
+  
+                  <option value="">
+                    Select Product
+                  </option>
+  
+                  {products.map(
+                    (product) => (
+  
+                      <option
+                        key={product.id}
+                        value={product.id}
+                      >
+  
+                        {product.name}
+  
+                      </option>
+  
+                    )
+                  )}
+  
+                </select>
+  
+                {/* Quantity */}
+  
+                <input
+                  type="number"
+                  value={item.quantity}
+                  onChange={(e) =>
+                    handleItemChange(
+                      index,
+                      "quantity",
+                      Number(
+                        e.target.value
+                      )
+                    )
+                  }
+                  placeholder="Quantity"
+                  className="form-input"
+                />
+  
+                {/* Price */}
+  
+                <input
+                  type="number"
+                  value={item.price}
+                  readOnly
+                  className="form-input"
+                />
+  
+              </div>
+  
+            )
+          )}
+  
+          {/* Total */}
+  
+          <h2
+            style={{
+              marginBottom: "20px"
+            }}
+          >
+  
+            Total:
+            ₹{calculateTotal()}
+  
+          </h2>
+  
+          {/* Submit */}
+  
+          <button
+            type="submit"
+            className="primary-btn"
+          >
+  
+            Create Purchase
+  
+          </button>
+  
+        </form>
+  
+      </div>
+  
     </MainLayout>
-
+  
   );
-
 }
-
-const inputStyle = {
-
-  padding: "10px",
-
-  minWidth: "200px"
-
-};
 
 export default Purchases;

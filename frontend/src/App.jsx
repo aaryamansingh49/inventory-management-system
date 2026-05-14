@@ -1,7 +1,4 @@
-import {
-  Routes,
-  Route
-} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 //Pages
 import Login from "./pages/Login";
@@ -16,27 +13,19 @@ import Suppliers from "./pages/Suppliers";
 import Purchases from "./pages/Purchases";
 import Inventory from "./pages/Inventory";
 
+
 function App() {
-
   return (
-
-    
     <Routes>
-        {/* Public Routes */}
+      {/* Public Routes */}
+
+      <Route path="/login" element={<Login />} />
+
+      <Route path="/signup" element={<Signup />} />
+
+      {/* Protected Routes */}
 
       <Route
-        path="/login"
-        element={<Login />}
-      />
-
-      <Route
-        path="/signup"
-        element={<Signup />}
-      />
-
-       {/* Protected Routes */}
-
-       <Route
         path="/dashboard"
         element={
           <ProtectedRoute>
@@ -54,64 +43,61 @@ function App() {
         }
       />
 
-<Route
-  path="/add-product"
-  element={
-    <ProtectedRoute>
-      <AddProduct />
-    </ProtectedRoute>
-  }
-/>
+      <Route
+        path="/add-product"
+        element={
+          <ProtectedRoute>
+            <AddProduct />
+          </ProtectedRoute>
+        }
+      />
 
-<Route
-  path="/edit-product/:id"
-  element={
-    <ProtectedRoute>
-      <EditProduct />
-    </ProtectedRoute>
-  }
-/>
+      <Route
+        path="/edit-product/:id"
+        element={
+          <ProtectedRoute>
+            <EditProduct />
+          </ProtectedRoute>
+        }
+      />
 
-<Route
-  path="/orders"
-  element={
-    <ProtectedRoute>
-      <Orders />
-    </ProtectedRoute>
-  }
-/>
+      <Route
+        path="/orders"
+        element={
+          <ProtectedRoute>
+            <Orders />
+          </ProtectedRoute>
+        }
+      />
 
-<Route
-  path="/suppliers"
-  element={
-    <ProtectedRoute>
-      <Suppliers />
-    </ProtectedRoute>
-  }
-/>
+      <Route
+        path="/suppliers"
+        element={
+          <ProtectedRoute>
+            <Suppliers />
+          </ProtectedRoute>
+        }
+      />
 
-<Route
-  path="/purchases"
-  element={
-    <ProtectedRoute>
-      <Purchases />
-    </ProtectedRoute>
-  }
-/>
+      <Route
+        path="/purchases"
+        element={
+          <ProtectedRoute>
+            <Purchases />
+          </ProtectedRoute>
+        }
+      />
 
-<Route
-  path="/inventory"
-  element={
-    <ProtectedRoute>
-      <Inventory />
-    </ProtectedRoute>
-  }
-/>
-
+      <Route
+        path="/inventory"
+        element={
+          <ProtectedRoute>
+            <Inventory />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
-
   );
-
 }
 
 export default App;

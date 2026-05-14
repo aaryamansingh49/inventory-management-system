@@ -1,5 +1,6 @@
 import { useState } from "react";
-
+import "../styles/auth.css";
+import "../styles/forms.css";
 import { useNavigate } from "react-router-dom";
 
 import api from "../services/api";
@@ -14,6 +15,8 @@ function Login() {
     password: ""
 
   });
+  const [showPassword, setShowPassword] =
+  useState(false);
 
   const handleChange = (e) => {
 
@@ -69,38 +72,115 @@ function Login() {
 
   return (
 
-    <div>
+    <div className="auth-container">
+  
+      <div className="auth-card">
+  
+        <h1 className="auth-title">
+  
+          Inventory Login
+  
+        </h1>
+  
+        <form onSubmit={handleLogin}>
+  
+          {/* Email */}
+  
+          <div className="form-group">
+  
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter Email"
+              onChange={handleChange}
+              className="form-input"
+            />
+  
+          </div>
+  
+          {/* Password */}
+  
+          <div className="form-group">
+  
+          <div
+  style={{
+    position: "relative"
+  }}
+>
 
-      <h1>Login</h1>
+  <input
+    type={
+      showPassword
+        ? "text"
+        : "password"
+    }
+    name="password"
+    placeholder="Enter Password"
+    onChange={handleChange}
+    className="form-input"
+  />
 
-      <form onSubmit={handleLogin}>
+  <span
+    onClick={() =>
+      setShowPassword(
+        !showPassword
+      )
+    }
+    style={{
+      position: "absolute",
+      right: "15px",
+      top: "50%",
+      transform:
+        "translateY(-50%)",
+      cursor: "pointer",
+      fontSize: "14px",
+      fontWeight: "bold",
+      color: "#555"
+    }}
+  >
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter Email"
-          onChange={handleChange}
-        />
+    {
+      showPassword
+        ? "Hide"
+        : "Show"
+    }
 
-        <br /><br />
+  </span>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <button type="submit">
-          Login
-        </button>
-
-      </form>
-
+</div>
+  
+          </div>
+  
+          {/* Submit */}
+  
+          <button
+            type="submit"
+            className="primary-btn"
+            style={{
+              width: "100%"
+            }}
+          >
+  
+            Login
+  
+          </button>
+  
+        </form>
+  
+        <div className="auth-footer">
+  
+          {/* <p>
+  
+            Inventory Management System
+  
+          </p> */}
+  
+        </div>
+  
+      </div>
+  
     </div>
-
+  
   );
 
 }

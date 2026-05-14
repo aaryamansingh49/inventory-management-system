@@ -63,20 +63,67 @@ const addSupplier = async (req, res) => {
 
 
 // GET ALL SUPPLIERS
-const getAllSuppliers = async (req, res) => {
+const getAllSuppliers = async (
+  req,
+  res
+) => {
 
   try {
+
+    // Current page
+
+    const page =
+      parseInt(req.query.page) || 1;
+
+    // Records per page
+
+    const limit = 10;
+
+    // Skip records
+
+    const offset =
+      (page - 1) * limit;
+
+    // Fetch suppliers
 
     const suppliers = await pool.query(
       `
       SELECT *
       FROM suppliers
+
       ORDER BY id DESC
-      `
+
+      LIMIT $1 OFFSET $2
+      `,
+      [limit, offset]
+    );
+
+    // Total suppliers
+
+    const totalSuppliers =
+      await pool.query(
+        `
+        SELECT COUNT(*)
+        FROM suppliers
+        `
+      );
+
+    // Total pages
+
+    const totalPages = Math.ceil(
+      totalSuppliers.rows[0].count /
+      limit
     );
 
     res.status(200).json({
-      suppliers: suppliers.rows
+
+      suppliers:
+        suppliers.rows,
+
+      totalPages,
+
+      currentPage: page
+
     });
 
   } catch (error) {

@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import "../styles/layout.css";
 
 function MainLayout({ children }) {
   const navigate = useNavigate();
@@ -18,132 +19,116 @@ function MainLayout({ children }) {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        minHeight: "100vh",
-      }}
-    >
+
+    <div className="layout">
+  
       {/* Sidebar */}
-
-      <div
-        style={{
-          width: "250px",
-          background: "#111827",
-          color: "white",
-          padding: "20px",
-        }}
-      >
+  
+      <div className="sidebar">
+  
         <h2>Inventory System</h2>
-
+  
         <hr />
-
-        <ul
-          style={{
-            listStyle: "none",
-            padding: 0,
-          }}
-        >
+  
+        <ul>
+  
           <li>
-            <Link to="/dashboard" style={linkStyle}>
+            <Link to="/dashboard">
               Dashboard
             </Link>
           </li>
-
+  
           <li>
-            <Link to="/products" style={linkStyle}>
+            <Link to="/products">
               Products
             </Link>
           </li>
-       
-       {
-        role === "admin" && (
-       
-          <li>
-            <Link to="/add-product" style={linkStyle}>
-              Add Product
-            </Link>
-          </li>
-          )
+  
+          {
+            role === "admin" && (
+  
+              <li>
+                <Link to="/add-product">
+                  Add Product
+                </Link>
+              </li>
+  
+            )
           }
-
+  
           <li>
-            <Link to="/orders" style={linkStyle}>
+            <Link to="/orders">
               Orders
             </Link>
           </li>
-
+  
           <li>
-            <Link to="/suppliers" style={linkStyle}>
+            <Link to="/suppliers">
               Suppliers
             </Link>
           </li>
-
+   
+     {
+       role === "admin" && (
+    
           <li>
-  <Link
-    to="/purchases"
-    style={linkStyle}
-  >
-    Purchases
-  </Link>
-</li>
+            <Link to="/purchases">
+              Purchases
+            </Link>
+          </li>
+  )
 
-<li>
-  <Link
-    to="/inventory"
-    style={linkStyle}
-  >
-    Inventory
-  </Link>
-</li>
+}
+  
+          <li>
+            <Link to="/inventory">
+              Inventory
+            </Link>
+          </li>
+  
         </ul>
-
+  
         <button
           onClick={handleLogout}
-          style={{
-            marginTop: "20px",
-            padding: "10px",
-            width: "100%",
-          }}
+          className="logout-btn"
         >
+  
           Logout
+  
         </button>
+  
       </div>
-
+  
       {/* Main Content */}
-
-      <div
-        style={{
-          flex: 1,
-          background: "#f3f4f6",
-          padding: "20px",
-        }}
-      >
+  
+      <div className="main-content">
+  
         {/* Navbar */}
-
-        <div
-          style={{
-            background: "white",
-            padding: "15px",
-            marginBottom: "20px",
-          }}
-        >
-          <h2>Inventory Dashboard</h2>
+  
+        <div className="navbar">
+  
+          <h2>
+            Inventory Dashboard
+          </h2>
+  
         </div>
-
+  
         {/* Page Content */}
-
+  
         {children}
+  
       </div>
+  
     </div>
+  
   );
 }
 
-const linkStyle = {
-  color: "white",
-  textDecoration: "none",
-  display: "block",
-  padding: "10px 0",
-};
+// const linkStyle = {
+//   color: "white",
+//   textDecoration: "none",
+//   display: "block",
+//   padding: "10px 0",
+// };
 
 export default MainLayout;

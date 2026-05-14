@@ -147,6 +147,46 @@ const getAllProducts = async (req, res) => {
   
   };
 
+  // GET ALL PRODUCTS FOR DROPDOWN
+
+const getAllProductsForDropdown =
+async (req, res) => {
+
+  try {
+
+    const products =
+      await pool.query(
+        `
+        SELECT
+          id,
+          name,
+          price,
+          stock
+
+        FROM products
+
+        ORDER BY name ASC
+        `
+      );
+
+    res.status(200).json({
+
+      products: products.rows
+
+    });
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.status(500).json({
+      message: "Server Error"
+    });
+
+  }
+
+};
+
 
   //Update Products
   const updateProduct = async (req, res) => {
@@ -271,5 +311,6 @@ module.exports = {
   addProduct,
   getAllProducts,
   updateProduct,
+  getAllProductsForDropdown,
   deleteProduct
 };

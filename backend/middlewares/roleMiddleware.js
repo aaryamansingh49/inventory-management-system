@@ -5,6 +5,10 @@ const roleMiddleware = (...allowedRoles) => {
       try {
   
         const userRole = req.user.role;
+
+        console.log("REQ.USER:", req.user);
+console.log("USER ROLE:", userRole);
+console.log("ALLOWED ROLES:", allowedRoles);
   
         if (!allowedRoles.includes(userRole)) {
   

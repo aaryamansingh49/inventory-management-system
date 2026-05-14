@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import "../styles/products.css";
 import MainLayout from "../layouts/MainLayout";
 
 import api from "../services/api";
@@ -52,118 +52,183 @@ function Products() {
   }, [page, search]);
 
   return (
+
     <MainLayout>
-      <h1>Products</h1>
-
+  
+      <h1
+        style={{
+          marginBottom: "20px"
+        }}
+      >
+        Products
+      </h1>
+  
       {/* Search */}
-
+  
       <input
         type="text"
         placeholder="Search products..."
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) =>
+          setSearch(e.target.value)
+        }
+        className="form-input"
         style={{
-          padding: "10px",
-          width: "300px",
-          marginBottom: "20px",
+          maxWidth: "350px",
+          marginBottom: "20px"
         }}
       />
-
+  
       {/* Table */}
-
-      <table
-        border="1"
-        width="100%"
-        cellPadding="10"
-        style={{
-          background: "white",
-        }}
-      >
-        <thead>
-          <tr>
-            <th>ID</th>
-
-            <th>Name</th>
-
-            <th>SKU</th>
-
-            <th>Price</th>
-
-            <th>Stock</th>
-
-            <th>Category</th>
-
-            <th>Actions</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {products.map((product) => (
-            <tr key={product.id}>
-              <td>{product.id}</td>
-
-              <td>{product.name}</td>
-
-              <td>{product.sku}</td>
-
-              <td>₹{product.price}</td>
-
-              <td>{product.stock}</td>
-
-              <td>{product.category_name}</td>
-
-              <td>
-                {role === "admin" && (
-                  <>
-                    <button
-                      onClick={() => navigate(`/edit-product/${product.id}`)}
-                    >
-                      Edit
-                    </button>
-
-                    <button
-                      onClick={() => deleteProduct(product.id)}
-                      style={{
-                        marginLeft: "10px",
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </>
-                )}
-              </td>
+  
+      <div className="dashboard-section">
+  
+        <table className="custom-table">
+  
+          <thead>
+  
+            <tr>
+  
+              <th>ID</th>
+  
+              <th>Name</th>
+  
+              <th>SKU</th>
+  
+              <th>Price</th>
+  
+              <th>Stock</th>
+  
+              <th>Category</th>
+  
+              <th>Actions</th>
+  
             </tr>
-          ))}
-        </tbody>
-      </table>
-
+  
+          </thead>
+  
+          <tbody>
+  
+            {products.map((product) => (
+  
+              <tr key={product.id}>
+  
+                <td>{product.id}</td>
+  
+                <td>{product.name}</td>
+  
+                <td>{product.sku}</td>
+  
+                <td>
+                  ₹{product.price}
+                </td>
+  
+                <td>{product.stock}</td>
+  
+                <td>
+                  {product.category_name}
+                </td>
+  
+                <td>
+  
+                  {
+  
+                    role === "admin" && (
+  
+                      <>
+  
+                        <button
+                          className="edit-btn"
+                          onClick={() =>
+                            navigate(
+                              `/edit-product/${product.id}`
+                            )
+                          }
+                        >
+  
+                          Edit
+  
+                        </button>
+  
+                        <button
+                          className="danger-btn"
+                          onClick={() =>
+                            deleteProduct(product.id)
+                          }
+                        >
+  
+                          Delete
+  
+                        </button>
+  
+                      </>
+  
+                    )
+  
+                  }
+  
+                </td>
+  
+              </tr>
+  
+            ))}
+  
+          </tbody>
+  
+        </table>
+  
+      </div>
+  
       {/* Pagination */}
 
-      <div
-        style={{
-          marginTop: "20px",
-        }}
-      >
-        <button disabled={page === 1} onClick={() => setPage(page - 1)}>
-          Prev
-        </button>
+<div
+  style={{
+    marginTop: "20px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "15px"
+  }}
+>
 
-        <span
-          style={{
-            margin: "0 15px",
-          }}
-        >
-          Page {page}
-        </span>
+  <button
+    className="primary-btn"
+    disabled={page === 1}
+    onClick={() =>
+      setPage(page - 1)
+    }
+  >
 
-        <button
-          disabled={page === totalPages}
-          onClick={() => setPage(page + 1)}
-        >
-          Next
-        </button>
-      </div>
+    Prev
+
+  </button>
+
+  <span
+    style={{
+      fontWeight: "bold"
+    }}
+  >
+
+    Page {page} of {totalPages}
+
+  </span>
+
+  <button
+    className="primary-btn"
+    disabled={page === totalPages}
+    onClick={() =>
+      setPage(page + 1)
+    }
+  >
+
+    Next
+
+  </button>
+
+</div>
+  
     </MainLayout>
+  
   );
 }
 

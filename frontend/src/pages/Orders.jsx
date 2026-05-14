@@ -2,7 +2,9 @@ import {
     useEffect,
     useState
   } from "react";
-  
+  import "../styles/forms.css";
+import "../styles/table.css";
+import "../styles/dashboard.css";
   import MainLayout from "../layouts/MainLayout";
   
   import api from "../services/api";
@@ -19,6 +21,12 @@ import {
 
       const [recentOrders, setRecentOrders] =
   useState([]);
+
+  const [page, setPage] =
+  useState(1);
+
+const [totalPages, setTotalPages] =
+  useState(1);
   
     // Fetch products
     const getProducts = async () => {
@@ -26,7 +34,7 @@ import {
       try {
   
         const response = await api.get(
-          "/products"
+          "/products/all"
         );
   
         setProducts(response.data.products);
@@ -43,23 +51,27 @@ import {
 
     const getRecentOrders = async () => {
 
-        try {
-      
-          const response = await api.get(
-            "/dashboard/recent-orders"
-          );
-      
-          setRecentOrders(
-            response.data.recentOrders
-          );
-      
-        } catch (error) {
-      
-          console.log(error);
-      
-        }
-      
-      };
+      try {
+    
+        const response = await api.get(
+          `/dashboard/recent-orders?page=${page}`
+        );
+    
+        setRecentOrders(
+          response.data.recentOrders
+        );
+    
+        setTotalPages(
+          response.data.totalPages
+        );
+    
+      } catch (error) {
+    
+        console.log(error);
+    
+      }
+    
+    };
   
     // Add product to order
     const addProduct = () => {
@@ -254,250 +266,347 @@ import {
     };
   
     useEffect(() => {
-  
+
       getProducts();
-      getRecentOrders();
-  
+    
     }, []);
+    
+    useEffect(() => {
+    
+      getRecentOrders();
+    
+    }, [page]);
   
     return (
-  
+
       <MainLayout>
-  
-        <h1>Create Order</h1>
-  
-        <form onSubmit={handleSubmit}>
-  
-          {/* Customer Name */}
-  
-          <input
-            type="text"
-            placeholder="Customer Name"
-            value={customerName}
-            onChange={(e) =>
-              setCustomerName(
-                e.target.value
-              )
-            }
-            style={inputStyle}
-          />
-  
-          {/* Add Product Button */}
-  
-          <button
-            type="button"
-            onClick={addProduct}
+    
+        {/* Create Order Section */}
+    
+        <div className="dashboard-section">
+    
+          <h1
             style={{
               marginBottom: "20px"
             }}
           >
-            Add Product
-          </button>
-  
-          {/* Product Items */}
-  
-          {selectedItems.map(
-            (item, index) => (
-  
-              <div
-                key={index}
-                style={{
-                  display: "flex",
-                  gap: "10px",
-                  marginBottom: "15px"
-                }}
-              >
-  
-                {/* Product Dropdown */}
-  
-                <select
-                  value={item.product_id}
-                  onChange={(e) =>
-                    handleItemChange(
-                      index,
-                      "product_id",
-                      e.target.value
-                    )
-                  }
-                  style={inputStyle}
+    
+            Create Order
+    
+          </h1>
+    
+          <form onSubmit={handleSubmit}>
+    
+            {/* Customer Name */}
+    
+            <div className="form-group">
+    
+              <input
+                type="text"
+                placeholder="Customer Name"
+                value={customerName}
+                onChange={(e) =>
+                  setCustomerName(
+                    e.target.value
+                  )
+                }
+                className="form-input"
+              />
+    
+            </div>
+    
+            {/* Add Product Button */}
+    
+            <button
+              type="button"
+              onClick={addProduct}
+              className="primary-btn"
+              style={{
+                marginBottom: "20px"
+              }}
+            >
+    
+              Add Product
+    
+            </button>
+    
+            {/* Product Items */}
+    
+            {selectedItems.map(
+              (item, index) => (
+    
+                <div
+                  key={index}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns:
+                      "2fr 1fr 1fr",
+                    gap: "15px",
+                    marginBottom: "20px"
+                  }}
                 >
-  
-                  <option value="">
-                    Select Product
-                  </option>
-  
-                  {products.map(
-                    (product) => (
-  
-                      <option
-                        key={product.id}
-                        value={product.id}
-                      >
-                        {product.name}
-                      </option>
-  
-                    )
-                  )}
-  
-                </select>
-  
-                {/* Quantity */}
-  
-                <input
-                  type="number"
-                  placeholder="Qty"
-                  value={item.quantity}
-                  onChange={(e) =>
-                    handleItemChange(
-                      index,
-                      "quantity",
-                      Number(
+    
+                  {/* Product Dropdown */}
+    
+                  <select
+                    value={item.product_id}
+                    onChange={(e) =>
+                      handleItemChange(
+                        index,
+                        "product_id",
                         e.target.value
                       )
-                    )
-                  }
-                  style={inputStyle}
-                />
-  
-                {/* Price */}
-  
-                <input
-                  type="number"
-                  value={item.price}
-                  readOnly
-                  style={inputStyle}
-                />
-  
-              </div>
-  
-            )
-          )}
-  
-          {/* Total */}
-  
-          <h2>
-            Total: ₹
-            {calculateTotal()}
-          </h2>
-  
-          {/* Submit */}
-  
-          <button type="submit">
-  
-            Create Order
-  
-          </button>
-  
-        </form>
-
-        <hr
-  style={{
-    margin: "40px 0"
-  }}
-/>
-
-<h2>Recent Orders</h2>
-
-<table
-  border="1"
-  width="100%"
-  cellPadding="10"
-  style={{
-    background: "white"
-  }}
->
-
-  <thead>
-
-    <tr>
-
-      <th>ID</th>
-
-      <th>Customer</th>
-
-      <th>Total</th>
-
-      <th>Status</th>
-
-      <th>Date</th>
-
-      <th>Invoice</th>
-
-    </tr>
-
-  </thead>
-
-  <tbody>
-
-    {recentOrders.map((order) => (
-
-      <tr key={order.id}>
-
-        <td>{order.id}</td>
-
-        <td>
-          {order.customer_name}
-        </td>
-
-        <td>
-          ₹{order.total_amount}
-        </td>
-
-        <td>
-          {order.status}
-        </td>
-
-        <td>
-          {
-            new Date(
-              order.order_date
-            ).toLocaleDateString()
-          }
-        </td>
-
-        <td>
-
-        <button
-  onClick={() =>
-    downloadInvoice(order.id)
-  }
->
-
-  Download Invoice
-
-</button>
-
-          {/* <a
-            href={`http://localhost:5000/api/invoices/${order.id}`}
-            target="_blank"
+                    }
+                    className="form-input"
+                  >
+    
+                    <option value="">
+                      Select Product
+                    </option>
+    
+                    {products.map(
+                      (product) => (
+    
+                        <option
+                          key={product.id}
+                          value={product.id}
+                        >
+    
+                          {product.name}
+    
+                        </option>
+    
+                      )
+                    )}
+    
+                  </select>
+    
+                  {/* Quantity */}
+    
+                  <input
+                    type="number"
+                    placeholder="Qty"
+                    value={item.quantity}
+                    onChange={(e) =>
+                      handleItemChange(
+                        index,
+                        "quantity",
+                        Number(
+                          e.target.value
+                        )
+                      )
+                    }
+                    className="form-input"
+                  />
+    
+                  {/* Price */}
+    
+                  <input
+                    type="number"
+                    value={item.price}
+                    readOnly
+                    className="form-input"
+                  />
+    
+                </div>
+    
+              )
+            )}
+    
+            {/* Total */}
+    
+            <h2
+              style={{
+                marginBottom: "20px"
+              }}
+            >
+    
+              Total:
+              ₹{calculateTotal()}
+    
+            </h2>
+    
+            {/* Submit */}
+    
+            <button
+              type="submit"
+              className="primary-btn"
+            >
+    
+              Create Order
+    
+            </button>
+    
+          </form>
+    
+        </div>
+    
+        {/* Recent Orders Section */}
+    
+        <div className="dashboard-section">
+    
+          <div
+            style={{
+              display: "flex",
+              justifyContent:
+                "space-between",
+              alignItems: "center",
+              marginBottom: "20px"
+            }}
           >
-
-            Download Invoice
-
-          </a> */}
-
-        </td>
-
-      </tr>
-
-    ))}
-
-  </tbody>
-
-</table>
-  
+    
+            <h2>
+    
+              Recent Orders
+    
+            </h2>
+    
+            <div
+              style={{
+                fontWeight: "bold",
+                color: "#2563eb"
+              }}
+            >
+    
+              Page {page} of {totalPages}
+    
+            </div>
+    
+          </div>
+    
+          <table className="custom-table">
+    
+            <thead>
+    
+              <tr>
+    
+                <th>ID</th>
+    
+                <th>Customer</th>
+    
+                <th>Total</th>
+    
+                <th>Status</th>
+    
+                <th>Date</th>
+    
+                <th>Invoice</th>
+    
+              </tr>
+    
+            </thead>
+    
+            <tbody>
+    
+              {recentOrders.map((order) => (
+    
+                <tr key={order.id}>
+    
+                  <td>{order.id}</td>
+    
+                  <td>
+                    {order.customer_name}
+                  </td>
+    
+                  <td>
+                    ₹{order.total_amount}
+                  </td>
+    
+                  <td>
+                    {order.status}
+                  </td>
+    
+                  <td>
+    
+                    {
+                      new Date(
+                        order.order_date
+                      ).toLocaleDateString()
+                    }
+    
+                  </td>
+    
+                  <td>
+    
+                    <button
+                      onClick={() =>
+                        downloadInvoice(
+                          order.id
+                        )
+                      }
+                      className="primary-btn"
+                    >
+    
+                      Download Invoice
+    
+                    </button>
+    
+                  </td>
+    
+                </tr>
+    
+              ))}
+    
+            </tbody>
+    
+          </table>
+    
+          {/* Pagination */}
+    
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "15px",
+              marginTop: "25px"
+            }}
+          >
+    
+            <button
+              className="primary-btn"
+              disabled={page === 1}
+              onClick={() =>
+                setPage(page - 1)
+              }
+            >
+    
+              Prev
+    
+            </button>
+    
+            <span
+              style={{
+                fontWeight: "bold"
+              }}
+            >
+    
+              Page {page}
+    
+            </span>
+    
+            <button
+              className="primary-btn"
+              disabled={
+                page === totalPages
+              }
+              onClick={() =>
+                setPage(page + 1)
+              }
+            >
+    
+              Next
+    
+            </button>
+    
+          </div>
+    
+        </div>
+    
       </MainLayout>
-  
+    
     );
   
   }
-  
-  const inputStyle = {
-  
-    padding: "10px",
-  
-    minWidth: "200px"
-  
-  };
   
   export default Orders;

@@ -2,7 +2,7 @@ import {
     useEffect,
     useState
   } from "react";
-  
+  import "../styles/forms.css";
   import { useNavigate } from "react-router-dom";
   
   import MainLayout from "../layouts/MainLayout";
@@ -93,109 +93,141 @@ import {
     }, []);
   
     return (
-  
+
       <MainLayout>
-  
-        <h1>Add Product</h1>
-  
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            background: "white",
-            padding: "20px",
-            maxWidth: "500px"
-          }}
-        >
-  
-          <input
-            type="text"
-            name="name"
-            placeholder="Product Name"
-            onChange={handleChange}
-            style={inputStyle}
-          />
-  
-          <input
-            type="text"
-            name="sku"
-            placeholder="SKU"
-            onChange={handleChange}
-            style={inputStyle}
-          />
-  
-          <textarea
-            name="description"
-            placeholder="Description"
-            onChange={handleChange}
-            style={inputStyle}
-          />
-  
-          <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            onChange={handleChange}
-            style={inputStyle}
-          />
-  
-          <input
-            type="number"
-            name="stock"
-            placeholder="Stock"
-            onChange={handleChange}
-            style={inputStyle}
-          />
-  
-          {/* Category Dropdown */}
-  
-          <select
-            name="category_id"
-            onChange={handleChange}
-            style={inputStyle}
-          >
-  
-            <option value="">
-              Select Category
-            </option>
-  
-            {categories.map((category) => (
-  
-              <option
-                key={category.id}
-                value={category.id}
-              >
-                {category.category_name}
-              </option>
-  
-            ))}
-  
-          </select>
-  
-          <button
-            type="submit"
+    
+        <div className="dashboard-section">
+    
+          <h1
             style={{
-              padding: "10px 20px"
+              marginBottom: "20px"
             }}
           >
             Add Product
-          </button>
-  
-        </form>
-  
+          </h1>
+    
+          <form onSubmit={handleSubmit}>
+    
+            {/* Product Name */}
+    
+            <div className="form-group">
+    
+              <input
+                type="text"
+                name="name"
+                placeholder="Product Name"
+                onChange={handleChange}
+                className="form-input"
+              />
+    
+            </div>
+    
+            {/* SKU */}
+    
+            <div className="form-group">
+    
+              <input
+                type="text"
+                name="sku"
+                placeholder="SKU"
+                onChange={handleChange}
+                className="form-input"
+              />
+    
+            </div>
+    
+            {/* Description */}
+    
+            <div className="form-group">
+    
+              <textarea
+                name="description"
+                placeholder="Description"
+                onChange={handleChange}
+                className="form-input"
+                rows="4"
+              />
+    
+            </div>
+    
+            {/* Price */}
+    
+            <div className="form-group">
+    
+              <input
+                type="number"
+                name="price"
+                placeholder="Price"
+                onChange={handleChange}
+                className="form-input"
+              />
+    
+            </div>
+    
+            {/* Stock */}
+    
+            <div className="form-group">
+    
+              <input
+                type="number"
+                name="stock"
+                placeholder="Stock"
+                onChange={handleChange}
+                className="form-input"
+              />
+    
+            </div>
+    
+            {/* Category */}
+    
+            <div className="form-group">
+    
+              <select
+                name="category_id"
+                onChange={handleChange}
+                className="form-input"
+              >
+    
+                <option value="">
+                  Select Category
+                </option>
+    
+                {categories.map((category) => (
+    
+                  <option
+                    key={category.id}
+                    value={category.id}
+                  >
+    
+                    {category.category_name}
+    
+                  </option>
+    
+                ))}
+    
+              </select>
+    
+            </div>
+    
+            {/* Submit Button */}
+    
+            <button
+              type="submit"
+              className="primary-btn"
+            >
+    
+              Add Product
+    
+            </button>
+    
+          </form>
+    
+        </div>
+    
       </MainLayout>
-  
+    
     );
   
   }
-  
-  const inputStyle = {
-  
-    width: "100%",
-  
-    padding: "10px",
-  
-    marginBottom: "15px"
-  
-  };
   
   export default AddProduct;
