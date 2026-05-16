@@ -2,9 +2,8 @@ import {
     useEffect,
     useState
   } from "react";
-  import "../styles/forms.css";
-import "../styles/table.css";
-import "../styles/dashboard.css";
+  import { Plus, Trash2, Search, ChevronLeft, ChevronRight, FileText } from "lucide-react";
+  import "../styles/orders.css";
   import MainLayout from "../layouts/MainLayout";
   
   import api from "../services/api";
@@ -276,335 +275,234 @@ const [totalPages, setTotalPages] =
       getRecentOrders();
     
     }, [page]);
+
+    // Status Chip UI rendering helper
+  const renderStatusChip = (status) => {
+    const cleanStatus = status ? status.toLowerCase() : 'pending';
+    return (
+      <span className={`status-badge badge-${cleanStatus}`}>
+        {status || 'Pending'}
+      </span>
+    );
+  };
   
     return (
-
       <MainLayout>
-    
-        {/* Create Order Section */}
-    
-        <div className="dashboard-section">
-    
-          <h1
-            style={{
-              marginBottom: "20px"
-            }}
-          >
-    
-            Create Order
-    
-          </h1>
-    
-          <form onSubmit={handleSubmit}>
-    
-            {/* Customer Name */}
-    
-            <div className="form-group">
-    
-              <input
-                type="text"
-                placeholder="Customer Name"
-                value={customerName}
-                onChange={(e) =>
-                  setCustomerName(
-                    e.target.value
-                  )
-                }
-                className="form-input"
-              />
-    
-            </div>
-    
-            {/* Add Product Button */}
-    
-            <button
-              type="button"
-              onClick={addProduct}
-              className="primary-btn"
-              style={{
-                marginBottom: "20px"
-              }}
-            >
-    
-              Add Product
-    
-            </button>
-    
-            {/* Product Items */}
-    
-            {selectedItems.map(
-              (item, index) => (
-    
-                <div
-                  key={index}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns:
-                      "2fr 1fr 1fr",
-                    gap: "15px",
-                    marginBottom: "20px"
-                  }}
-                >
-    
-                  {/* Product Dropdown */}
-    
-                  <select
-                    value={item.product_id}
-                    onChange={(e) =>
-                      handleItemChange(
-                        index,
-                        "product_id",
-                        e.target.value
-                      )
-                    }
-                    className="form-input"
-                  >
-    
-                    <option value="">
-                      Select Product
-                    </option>
-    
-                    {products.map(
-                      (product) => (
-    
-                        <option
-                          key={product.id}
-                          value={product.id}
-                        >
-    
-                          {product.name}
-    
-                        </option>
-    
-                      )
-                    )}
-    
-                  </select>
-    
-                  {/* Quantity */}
-    
+        <div className="orders-management-container">
+          <div className="orders-page-header">
+            <h1>Orders Management</h1>
+          </div>
+  
+          {/* CREATE NEW ORDER CARD */}
+          <div className="order-card-panel">
+            <div className="panel-header-title">CREATE NEW ORDER</div>
+            <form onSubmit={handleSubmit} className="order-builder-form">
+              
+              <div className="customer-input-row">
+                <label htmlFor="customerNameInput">Customer Name</label>
+                <div className="search-input-wrapper">
                   <input
-                    type="number"
-                    placeholder="Qty"
-                    value={item.quantity}
-                    onChange={(e) =>
-                      handleItemChange(
-                        index,
-                        "quantity",
-                        Number(
-                          e.target.value
-                        )
-                      )
-                    }
-                    className="form-input"
+                    id="customerNameInput"
+                    type="text"
+                    placeholder="Enter Customer Name"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    className="clean-control-input"
                   />
-    
-                  {/* Price */}
-    
-                  <input
-                    type="number"
-                    value={item.price}
-                    readOnly
-                    className="form-input"
-                  />
-    
+                  <Search size={16} className="input-search-icon" />
                 </div>
-    
-              )
-            )}
-    
-            {/* Total */}
-    
-            <h2
-              style={{
-                marginBottom: "20px"
-              }}
-            >
-    
-              Total:
-              ₹{calculateTotal()}
-    
-            </h2>
-    
-            {/* Submit */}
-    
-            <button
-              type="submit"
-              className="primary-btn"
-            >
-    
-              Create Order
-    
-            </button>
-    
-          </form>
-    
-        </div>
-    
-        {/* Recent Orders Section */}
-    
-        <div className="dashboard-section">
-    
-          <div
-            style={{
-              display: "flex",
-              justifyContent:
-                "space-between",
-              alignItems: "center",
-              marginBottom: "20px"
-            }}
-          >
-    
-            <h2>
-    
-              Recent Orders
-    
-            </h2>
-    
-            <div
-              style={{
-                fontWeight: "bold",
-                color: "#2563eb"
-              }}
-            >
-    
-              Page {page} of {totalPages}
-    
+              </div>
+  
+              {/* Dynamic Product Formulation Grid */}
+              <div className="product-table-framework">
+                <div className="grid-table-header">
+                  <div className="col-desc">PRODUCT DETAILS</div>
+                  <div className="col-qty">QUANTITY</div>
+                  <div className="col-price">UNIT PRICE</div>
+                  <div className="col-amt">AMOUNT</div>
+                  <div className="col-action">ACTION</div>
+                </div>
+  
+                {selectedItems.length > 0 ? (
+                  <div className="grid-table-body">
+                    {selectedItems.map((item, index) => (
+                      <div className="grid-table-row" key={index}>
+                        <div className="col-desc">
+                          <select
+                            value={item.product_id}
+                            onChange={(e) => handleItemChange(index, "product_id", e.target.value)}
+                            className="clean-control-select"
+                          >
+                            <option value="">Select Product from Inventory...</option>
+                            {products.map((product) => (
+                              <option key={product.id} value={product.id}>
+                                {product.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-qty">
+                          <input
+                            type="number"
+                            min="1"
+                            placeholder="Enter Quantity"
+                            value={item.quantity}
+                            onChange={(e) => handleItemChange(index, "quantity", Number(e.target.value))}
+                            className="clean-control-input text-center"
+                          />
+                        </div>
+                        <div className="col-price font-medium text-slate">
+                          ₹{Number(item.price).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                        </div>
+                        <div className="col-amt font-semibold text-slate">
+                          ₹{(item.quantity * item.price).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                        </div>
+                        <div className="col-action">
+                          <button
+                            type="button"
+                            className="row-trash-action"
+                            onClick={() => {
+                              const filtered = [...selectedItems];
+                              filtered.splice(index, 1);
+                              setSelectedItems(filtered);
+                            }}
+                            aria-label="Remove item"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-items-placeholder">
+                    No items added to this order yet. Click "Add Product" below to begin.
+                  </div>
+                )}
+  
+                <div className="product-addition-row">
+                  <button
+                    type="button"
+                    onClick={addProduct}
+                    className="add-product-dashed-btn"
+                  >
+                    <Plus size={14} /> Add Product
+                  </button>
+                  <div className="live-total-display">
+                    Total Amount: <span className="price-bold">₹{calculateTotal().toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                  </div>
+                </div>
+              </div>
+  
+              <div className="form-submission-footer">
+                <button type="submit" className="action-submit-order-btn">
+                  CREATE ORDER
+                </button>
+              </div>
+            </form>
+          </div>
+  
+          {/* RECENT ORDERS GRID HISTORY */}
+          <div className="orders-history-section-label">RECENT ORDERS</div>
+          
+          <div className="order-card-panel">
+            <div className="panel-inner-sub-header">
+              <h3>RECENT ORDERS HISTORY</h3>
+              <div className="top-meta-pagination-text">
+                Showing <span>Page {page}</span> of <span>{totalPages || 1}</span> orders
+              </div>
             </div>
-    
-          </div>
-    
-          <table className="custom-table">
-    
-            <thead>
-    
-              <tr>
-    
-                <th>ID</th>
-    
-                <th>Customer</th>
-    
-                <th>Total</th>
-    
-                <th>Status</th>
-    
-                <th>Date</th>
-    
-                <th>Invoice</th>
-    
-              </tr>
-    
-            </thead>
-    
-            <tbody>
-    
-              {recentOrders.map((order) => (
-    
-                <tr key={order.id}>
-    
-                  <td>{order.id}</td>
-    
-                  <td>
-                    {order.customer_name}
-                  </td>
-    
-                  <td>
-                    ₹{order.total_amount}
-                  </td>
-    
-                  <td>
-                    {order.status}
-                  </td>
-    
-                  <td>
-    
-                    {
-                      new Date(
-                        order.order_date
-                      ).toLocaleDateString()
-                    }
-    
-                  </td>
-    
-                  <td>
-    
+  
+            <div className="responsive-table-view-container">
+              <table className="modern-orders-data-sheet">
+                <thead>
+                  <tr>
+                    <th style={{ width: '12%' }}>ORDER ID</th>
+                    <th style={{ width: '28%' }}>CUSTOMER NAME</th>
+                    <th style={{ width: '18%' }}>TOTAL AMOUNT</th>
+                    <th style={{ width: '14%' }}>STATUS</th>
+                    <th style={{ width: '14%' }}>ORDER DATE</th>
+                    <th style={{ width: '14%' }}>ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recentOrders.length > 0 ? (
+                    recentOrders.map((order) => (
+                      <tr key={order.id}>
+                        <td className="order-id-label">#{order.id}</td>
+                        <td className="font-medium text-dark-slate">{order.customer_name}</td>
+                        <td className="font-semibold text-dark-slate">
+                          ₹{Number(order.total_amount).toLocaleString('en-IN')}
+                        </td>
+                        <td>{renderStatusChip(order.status)}</td>
+                        <td className="text-muted-gray text-sm">
+                          {new Date(order.order_date).toLocaleDateString('en-IN', {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric'
+                          })}
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            onClick={() => downloadInvoice(order.id)}
+                            className="download-invoice-action-btn"
+                          >
+                            <FileText size={14} /> Download Invoice
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" className="table-empty-fallback-state">
+                        No matching records or recent history logged.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+  
+            {/* Bottom Dynamic Nav Sheet Pagination */}
+            <div className="bottom-pagination-action-bar">
+              <div className="navigation-controls-cluster">
+                <button
+                  type="button"
+                  className="navigation-arrow-btn"
+                  disabled={page === 1}
+                  onClick={() => setPage(page - 1)}
+                >
+                  <ChevronLeft size={16} /> Prev
+                </button>
+  
+                {[...Array(totalPages)].map((_, idx) => {
+                  const stepPage = idx + 1;
+                  return (
                     <button
-                      onClick={() =>
-                        downloadInvoice(
-                          order.id
-                        )
-                      }
-                      className="primary-btn"
+                      key={idx}
+                      type="button"
+                      className={`navigation-arrow-btn numerical-page-btn ${page === stepPage ? "active-step" : ""}`}
+                      onClick={() => setPage(stepPage)}
                     >
-    
-                      Download Invoice
-    
+                      {stepPage}
                     </button>
-    
-                  </td>
-    
-                </tr>
-    
-              ))}
-    
-            </tbody>
-    
-          </table>
-    
-          {/* Pagination */}
-    
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "15px",
-              marginTop: "25px"
-            }}
-          >
-    
-            <button
-              className="primary-btn"
-              disabled={page === 1}
-              onClick={() =>
-                setPage(page - 1)
-              }
-            >
-    
-              Prev
-    
-            </button>
-    
-            <span
-              style={{
-                fontWeight: "bold"
-              }}
-            >
-    
-              Page {page}
-    
-            </span>
-    
-            <button
-              className="primary-btn"
-              disabled={
-                page === totalPages
-              }
-              onClick={() =>
-                setPage(page + 1)
-              }
-            >
-    
-              Next
-    
-            </button>
-    
+                  );
+                })}
+  
+                <button
+                  type="button"
+                  className="navigation-arrow-btn"
+                  disabled={page === totalPages || totalPages === 0}
+                  onClick={() => setPage(page + 1)}
+                >
+                  Next <ChevronRight size={16} />
+                </button>
+              </div>
+            </div>
           </div>
-    
         </div>
-    
       </MainLayout>
-    
     );
   
   }

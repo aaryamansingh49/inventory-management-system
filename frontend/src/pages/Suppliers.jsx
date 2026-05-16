@@ -145,7 +145,7 @@ function Suppliers() {
                   <input
                     type="text"
                     name="supplier_name"
-                    placeholder="Acme Corporation"
+                    placeholder="Enter Supplier Name"
                     value={formData.supplier_name}
                     onChange={handleChange}
                     required
@@ -161,7 +161,7 @@ function Suppliers() {
                   <input
                     type="text"
                     name="phone"
-                    placeholder="+1-555-0199"
+                    placeholder="Enter Supplier Phone"
                     value={formData.phone}
                     onChange={handleChange}
                     required
@@ -177,7 +177,7 @@ function Suppliers() {
                   <input
                     type="text"
                     name="address"
-                    placeholder="123 Industrial Way, Springfield"
+                    placeholder="Enter Supplier Address"
                     value={formData.address}
                     onChange={handleChange}
                     required

@@ -1,0 +1,521 @@
+:root {
+    --bg-canvas: #f1f5f9;
+    --bg-surface-card: #ffffff;
+    --border-subtle: #e2e8f0;
+    --text-main-slate: #0f172a;
+    --text-dark-slate: #1e293b;
+    --text-muted-gray: #64748b;
+    
+    /* Primary Action Accents */
+    --action-indigo-primary: #1e6ce6;
+    --action-indigo-hover: #1656b8;
+    --action-soft-blue: #f0f7ff;
+    
+    /* System Status Colors */
+    --badge-green-bg: #dcfce7;
+    --badge-green-txt: #15803d;
+    --badge-amber-bg: #fef3c7;
+    --badge-amber-txt: #b45309;
+    --badge-orange-bg: #ffedd5;
+    --badge-orange-txt: #c2410c;
+    --badge-purple-bg: #f3e8ff;
+    --badge-purple-txt: #6b21a8;
+    --badge-gray-bg: #f1f5f9;
+    --badge-gray-txt: #475569;
+  }
+  
+  /* Base View Layout */
+  .orders-management-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-main-slate);
+    background-color: var(--bg-canvas);
+    min-height: 100vh;
+  }
+  
+  .orders-page-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-dark-slate);
+    margin: 0 0 1.5rem 0;
+    letter-spacing: -0.02em;
+  }
+  
+  /* Card Panel Framework Styles */
+  .order-card-panel {
+    background: var(--bg-surface-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 12px rgba(0, 0, 0, 0.03);
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  
+  .panel-header-title {
+    background-color: #ffffff;
+    padding: 1.25rem 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text-dark-slate);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  
+  .panel-inner-sub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .panel-inner-sub-header h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.02em;
+    color: var(--text-dark-slate);
+  }
+  
+  /* Subtitles / Group Labels */
+  .orders-history-section-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text-dark-slate);
+    margin: 2.5rem 0 1rem 0;
+  }
+  
+  /* Customer input configuration block */
+  .order-builder-form {
+    padding: 1.5rem;
+  }
+  
+  .customer-input-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 420px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .customer-input-row label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted-gray);
+  }
+  
+  .search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-search-icon {
+    position: absolute;
+    right: 14px;
+    color: var(--text-muted-gray);
+    pointer-events: none;
+  }
+  
+  /* Form controls styling mechanics */
+  .clean-control-input, 
+  .clean-control-select {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-subtle);
+    background-color: #ffffff;
+    color: var(--text-dark-slate);
+    font-size: 0.925rem;
+    font-family: inherit;
+    transition: all 0.15s ease;
+  }
+  
+  .search-input-wrapper .clean-control-input {
+    padding-right: 40px;
+  }
+  
+  .clean-control-input:focus,
+  .clean-control-select:focus {
+    outline: none;
+    border-color: #a8a29e;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05);
+  }
+  
+  .text-center { text-align: center; }
+  
+  /* Dynamic layout product builder grid setup */
+  .product-table-framework {
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  
+  .grid-table-header {
+    display: grid;
+    grid-template-columns: 3fr 1.2fr 1.5fr 1.5fr 0.8fr;
+    background-color: #f8fafc;
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted-gray);
+    letter-spacing: 0.05em;
+  }
+  
+  .grid-table-row {
+    display: grid;
+    grid-template-columns: 3fr 1.2fr 1.5fr 1.5fr 0.8fr;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    background: #ffffff;
+  }
+  
+  .grid-table-row:last-child {
+    border-bottom: none;
+  }
+  
+  .grid-table-row > div {
+    padding: 0 4px;
+  }
+  
+  /* Inline typography alignments */
+  .font-medium { font-weight: 500; }
+  .font-semibold { font-weight: 600; }
+  .text-slate { color: var(--text-dark-slate); }
+  .text-dark-slate { color: var(--text-dark-slate); }
+  .text-muted-gray { color: var(--text-muted-gray); }
+  .text-sm { font-size: 0.85rem; }
+  
+  /* Row level interactive actions */
+  .row-trash-action {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+  }
+  
+  .row-trash-action:hover {
+    background-color: #fee2e2;
+  }
+  
+  .empty-items-placeholder {
+    padding: 2.5rem;
+    text-align: center;
+    color: var(--text-muted-gray);
+    font-size: 0.9rem;
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  
+  /* Addition panel metadata layout footer line */
+  .product-addition-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #ffffff;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .add-product-dashed-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #ffffff;
+    border: 1px dashed #cbd5e1;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dark-slate);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  
+  .add-product-dashed-btn:hover {
+    border-color: var(--text-muted-gray);
+    background-color: #f8fafc;
+  }
+  
+  .live-total-display {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-dark-slate);
+  }
+  
+  .live-total-display .price-bold {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-left: 0.25rem;
+  }
+  
+  /* Submission action engine controls */
+  .form-submission-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+  }
+  
+  .action-submit-order-btn {
+    background-color: var(--action-indigo-primary);
+    color: #ffffff;
+    border: none;
+    height: 42px;
+    padding: 0 1.75rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: background-color 0.15s ease;
+  }
+  
+  .action-submit-order-btn:hover {
+    background-color: var(--action-indigo-hover);
+  }
+  
+  /* Top Meta Pagination Counter Display Panel */
+  .top-meta-pagination-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted-gray);
+  }
+  
+  .top-meta-pagination-text span {
+    font-weight: 600;
+    color: var(--text-dark-slate);
+  }
+  
+  /* Tabular Sheet Controls Structural Setup */
+  .responsive-table-view-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .modern-orders-data-sheet {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+  }
+  
+  .modern-orders-data-sheet th {
+    background-color: #ffffff;
+    color: var(--text-muted-gray);
+    font-weight: 700;
+    padding: 1rem 1.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  
+  .modern-orders-data-sheet td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: middle;
+    background-color: #ffffff;
+  }
+  
+  .modern-orders-data-sheet tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .modern-orders-data-sheet tr:hover td {
+    background-color: #f8fafc;
+  }
+  
+  .order-id-label {
+    font-weight: 600;
+    color: var(--text-muted-gray);
+  }
+  
+  /* Status Pill Indicators Core Logic mapping classes definitions */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    text-transform: capitalize;
+    letter-spacing: 0.01em;
+  }
+  
+  .badge-delivered, .badge-completed, .badge-success {
+    background-color: var(--badge-green-bg);
+    color: var(--badge-green-txt);
+  }
+  
+  .badge-pending {
+    background-color: var(--badge-amber-bg);
+    color: var(--badge-amber-txt);
+  }
+  
+  .badge-processing {
+    background-color: var(--badge-orange-bg);
+    color: var(--badge-orange-txt);
+  }
+  
+  .badge-shipped {
+    background-color: var(--badge-purple-bg);
+    color: var(--badge-purple-txt);
+  }
+  
+  .badge-cancelled, .badge-failed {
+    background-color: #fee2e2;
+    color: #b91c1c;
+  }
+  
+  /* Row Action Element Download buttons definitions */
+  .download-invoice-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: #ffffff;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-dark-slate);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  
+  .download-invoice-action-btn:hover {
+    background-color: var(--action-soft-blue);
+    border-color: #bfdbfe;
+    color: var(--action-indigo-primary);
+  }
+  
+  .table-empty-fallback-state {
+    text-align: center;
+    padding: 4rem 1.5rem;
+    color: var(--text-muted-gray);
+    font-style: italic;
+  }
+  
+  /* Bottom centered single group row page selector bar wrapper layout */
+  .bottom-pagination-action-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+    background-color: #ffffff;
+  }
+  
+  .navigation-controls-cluster {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  
+  .navigation-arrow-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    height: 34px;
+    padding: 0 12px;
+    border: 1px solid var(--border-subtle);
+    background: #ffffff;
+    color: var(--text-muted-gray);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  
+  .navigation-arrow-btn.numerical-page-btn {
+    width: 34px;
+    padding: 0;
+  }
+  
+  .navigation-arrow-btn:hover:not(:disabled) {
+    color: var(--text-dark-slate);
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+  
+  .navigation-arrow-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: #f8fafc;
+  }
+  
+  /* Selected layout stage active steps numbers highlights mapping keys style */
+  .navigation-arrow-btn.active-step {
+    background-color: var(--text-dark-slate);
+    border-color: var(--text-dark-slate);
+    color: #ffffff;
+  }
+  
+  .navigation-arrow-btn.active-step:hover {
+    background-color: var(--text-main-slate);
+    border-color: var(--text-main-slate);
+  }
+  
+  /* Responsive breakdowns for mobile views and tablet interfaces screens */
+  @media (max-width: 992px) {
+    .grid-table-header, .grid-table-row {
+      grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .orders-management-container {
+      padding: 1rem;
+    }
+    .grid-table-header {
+      display: none;
+    }
+    .grid-table-row {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+      padding: 1rem;
+    }
+    .grid-table-row > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+    }
+    .grid-table-row > div::before {
+      content: attr(class);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted-gray);
+      text-transform: uppercase;
+    }
+    .grid-table-row .col-action {
+      justify-content: flex-end;
+      margin-top: 0.5rem;
+      border-top: 1px dashed var(--border-subtle);
+      padding-top: 0.5rem;
+    }
+    .panel-inner-sub-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
