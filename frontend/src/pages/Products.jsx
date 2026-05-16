@@ -52,183 +52,105 @@ function Products() {
   }, [page, search]);
 
   return (
-
     <MainLayout>
-  
-      <h1
-        style={{
-          marginBottom: "20px"
-        }}
-      >
-        Products
-      </h1>
-  
-      {/* Search */}
-  
-      <input
-        type="text"
-        placeholder="Search products..."
-        value={search}
-        onChange={(e) =>
-          setSearch(e.target.value)
-        }
-        className="form-input"
-        style={{
-          maxWidth: "350px",
-          marginBottom: "20px"
-        }}
-      />
-  
-      {/* Table */}
-  
-      <div className="dashboard-section">
-  
-        <table className="custom-table">
-  
-          <thead>
-  
-            <tr>
-  
-              <th>ID</th>
-  
-              <th>Name</th>
-  
-              <th>SKU</th>
-  
-              <th>Price</th>
-  
-              <th>Stock</th>
-  
-              <th>Category</th>
-  
-              <th>Actions</th>
-  
-            </tr>
-  
-          </thead>
-  
-          <tbody>
-  
-            {products.map((product) => (
-  
-              <tr key={product.id}>
-  
-                <td>{product.id}</td>
-  
-                <td>{product.name}</td>
-  
-                <td>{product.sku}</td>
-  
-                <td>
-                  ₹{product.price}
-                </td>
-  
-                <td>{product.stock}</td>
-  
-                <td>
-                  {product.category_name}
-                </td>
-  
-                <td>
-  
-                  {
-  
-                    role === "admin" && (
-  
-                      <>
-  
-                        <button
-                          className="edit-btn"
-                          onClick={() =>
-                            navigate(
-                              `/edit-product/${product.id}`
-                            )
-                          }
-                        >
-  
-                          Edit
-  
-                        </button>
-  
-                        <button
-                          className="danger-btn"
-                          onClick={() =>
-                            deleteProduct(product.id)
-                          }
-                        >
-  
-                          Delete
-  
-                        </button>
-  
-                      </>
-  
-                    )
-  
-                  }
-  
-                </td>
-  
-              </tr>
-  
-            ))}
-  
-          </tbody>
-  
-        </table>
-  
+      <div className="products-dashboard-wrapper">
+        
+        {/* Top Header Section */}
+        <div className="products-header-row">
+          <h1 className="products-main-title">Products</h1>
+          <div className="products-search-box">
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="products-search-input"
+            />
+          </div>
+        </div>
+
+        {/* Content Card Panel */}
+        <div className="products-card-panel">
+          <div className="products-table-container">
+            <table className="products-data-table">
+              <thead>
+                <tr>
+                  <th>PRODUCT ID</th>
+                  <th>PRODUCT NAME</th>
+                  <th>SKU</th>
+                  <th>PRODUCT PRICE</th>
+                  <th>STOCK QUANTITY</th>
+                  <th>PRODUCT CATEGORY</th>
+                  <th>ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products.length > 0 ? (
+                  products.map((product) => (
+                    <tr key={product.id}>
+                      <td className="product-id-cell">{product.id}</td>
+                      <td className="product-name-cell">{product.name}</td>
+                      <td className="product-sku-cell">{product.sku}</td>
+                      <td className="product-price-cell">₹{product.price}</td>
+                      <td className="product-stock-cell">{product.stock}</td>
+                      <td className="product-category-cell">{product.category_name}</td>
+                      <td className="product-actions-cell">
+                        {role === "admin" && (
+                          <div className="action-buttons-group">
+                            <button
+                              className="product-btn-edit"
+                              onClick={() => navigate(`/edit-product/${product.id}`)}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              className="product-btn-delete"
+                              onClick={() => deleteProduct(product.id)}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="7" className="products-empty-state">
+                      No products found matching your search.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Bottom Pagination controls inside the card */}
+          <div className="products-pagination-footer">
+            <button
+              className="products-nav-btn"
+              disabled={page === 1}
+              onClick={() => setPage(page - 1)}
+            >
+              Previous
+            </button>
+            
+            <span className="products-page-indicator">
+              Current Page: {page} of {totalPages}
+            </span>
+
+            <button
+              className="products-nav-btn"
+              disabled={page === totalPages}
+              onClick={() => setPage(page + 1)}
+            >
+              Next
+            </button>
+          </div>
+
+        </div>
       </div>
-  
-      {/* Pagination */}
-
-<div
-  style={{
-    marginTop: "20px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "15px"
-  }}
->
-
-  <button
-    className="primary-btn"
-    disabled={page === 1}
-    onClick={() =>
-      setPage(page - 1)
-    }
-  >
-
-    Prev
-
-  </button>
-
-  <span
-    style={{
-      fontWeight: "bold"
-    }}
-  >
-
-    Page {page} of {totalPages}
-
-  </span>
-
-  <button
-    className="primary-btn"
-    disabled={page === totalPages}
-    onClick={() =>
-      setPage(page + 1)
-    }
-  >
-
-    Next
-
-  </button>
-
-</div>
-  
     </MainLayout>
-  
   );
 }
 

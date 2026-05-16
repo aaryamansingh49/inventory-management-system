@@ -1,33 +1,30 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { 
-  LayoutDashboard, 
-  Box, 
-  PlusCircle, 
-  ShoppingCart, 
-  Users, 
-  Truck, 
-  Warehouse, 
+import {
+  LayoutDashboard,
+  Box,
+  PlusCircle,
+  ShoppingCart,
+  Users,
+  Truck,
+  Warehouse,
   LogOut,
-  Package2
+  Package2,
 } from "lucide-react";
 import "../styles/layout.css";
 
 function MainLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const user = JSON.parse(
-    localStorage.getItem("user")
-  );
-  
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const role = user?.role;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
 
     localStorage.removeItem("user");
-    
 
-    navigate("/login");
+    navigate("/");
   };
 
   const isActive = (path) => location.pathname === path;
@@ -94,12 +91,12 @@ function MainLayout({ children }) {
               </li>
             )}
 
-<li className={isActive("/purchase-history") ? "active" : ""}>
-                <Link to="/purchase-history">
-                  <Truck size={20} />
-                  <span>Purchase History</span>
-                </Link>
-              </li>
+            <li className={isActive("/purchase-history") ? "active" : ""}>
+              <Link to="/purchase-history">
+                <Truck size={20} />
+                <span>Purchase History</span>
+              </Link>
+            </li>
 
             <li className={isActive("/inventory") ? "active" : ""}>
               <Link to="/inventory">
@@ -119,9 +116,7 @@ function MainLayout({ children }) {
       </aside>
 
       {/* Main Content */}
-      <main className="main-content">
-        {children}
-      </main>
+      <main className="main-content">{children}</main>
     </div>
   );
 }

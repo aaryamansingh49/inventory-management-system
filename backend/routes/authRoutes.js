@@ -20,8 +20,5 @@ router.get("/admin", authMiddleware, roleMiddleware("admin"), (req, res) => {
   });
 });
 
-// router.get("/test", (req, res) => {
-//   res.send("Auth route working");
-// });
 
 module.exports = router;
