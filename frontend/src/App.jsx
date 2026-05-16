@@ -11,7 +11,9 @@ import EditProduct from "./pages/EditProduct";
 import Orders from "./pages/Orders";
 import Suppliers from "./pages/Suppliers";
 import Purchases from "./pages/Purchases";
+import PurchaseHistory from "./pages/PurchaseHistory";
 import Inventory from "./pages/Inventory";
+
 
 
 function App() {
@@ -87,6 +89,11 @@ function App() {
           </ProtectedRoute>
         }
       />
+
+<Route
+   path="/purchase-history"
+   element={<PurchaseHistory />}
+/>
 
       <Route
         path="/inventory"

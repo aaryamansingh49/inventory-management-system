@@ -8,9 +8,6 @@ import {
   CreditCard,
 } from "lucide-react";
 import "../styles/purchases.css";
-// import "../styles/forms.css";
-// import "../styles/table.css";
-// import "../styles/dashboard.css";
 import MainLayout from "../layouts/MainLayout";
 
 import api from "../services/api";

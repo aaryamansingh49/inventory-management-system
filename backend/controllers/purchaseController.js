@@ -116,6 +116,61 @@ const createPurchase = async (req, res) => {
 
 };
 
+//  Purchase History
+const getPurchaseHistory = async (req, res) => {
+
+  try {
+
+    const result = await pool.query(
+
+      `
+      SELECT
+
+        purchases.id AS purchase_id,
+
+        suppliers.supplier_name,
+        suppliers.phone,
+        suppliers.address,
+
+        products.name AS product_name,
+
+        purchase_items.quantity,
+        purchase_items.price,
+
+        purchases.total_amount,
+
+        purchases.purchase_date
+
+      FROM purchases
+
+      JOIN suppliers
+      ON purchases.supplier_id = suppliers.id
+
+      JOIN purchase_items
+      ON purchases.id = purchase_items.purchase_id
+
+      JOIN products
+      ON purchase_items.product_id = products.id
+
+      ORDER BY purchases.purchase_date DESC
+      `
+    );
+
+    res.status(200).json(result.rows);
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.status(500).json({
+      message: "Server Error"
+    });
+
+  }
+
+};
+
 module.exports = {
-  createPurchase
+  createPurchase,
+  getPurchaseHistory
 };

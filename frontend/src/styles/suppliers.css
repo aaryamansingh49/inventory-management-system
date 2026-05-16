@@ -1,0 +1,309 @@
+:root {
+    --suppliers-surface-bg: #f8fafc;
+    --card-white-panel: #ffffff;
+    --border-slate-tint: #e2e8f0;
+    --text-dark-slate: #1e293b;
+    --text-muted-gray: #64748b;
+    --action-blue: #1e6ce6;
+    --action-blue-hover: #1656b8;
+    --shadow-subtle-smooth: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+    --radius-standard: 12px;
+  }
+  
+  .suppliers-dashboard-wrapper {
+    padding: 2rem;
+    background-color: var(--suppliers-surface-bg);
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  .suppliers-main-header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 1.75rem 0;
+    letter-spacing: -0.5px;
+  }
+  
+  /* ==========================================================================
+     1. Inline Form Styling Card Block
+     ========================================================================== */
+  .supplier-form-card-panel {
+    background: var(--card-white-panel);
+    padding: 1.5rem 1.75rem;
+    border-radius: var(--radius-standard);
+    box-shadow: var(--shadow-subtle-smooth);
+    border: 1px solid rgba(0, 0, 0, 0.01);
+    margin-bottom: 2rem;
+  }
+  
+  .supplier-form-card-panel h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-dark-slate);
+    margin: 0 0 1.25rem 0;
+  }
+  
+  .supplier-inline-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  
+  .supplier-input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    flex: 1;
+    min-width: 220px;
+  }
+  
+  .supplier-input-field.field-grow-address {
+    flex: 1.8;
+  }
+  
+  .supplier-input-field label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted-gray);
+  }
+  
+  .input-with-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .field-inner-icon {
+    position: absolute;
+    left: 14px;
+    color: #a0aec0;
+    pointer-events: none;
+  }
+  
+  .input-with-icon-wrapper input {
+    width: 100%;
+    padding: 11px 14px 11px 40px;
+    border: 1.5px solid var(--border-slate-tint);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: var(--text-dark-slate);
+    background-color: var(--card-white-panel);
+    outline: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .input-with-icon-wrapper input:focus {
+    border-color: var(--action-blue);
+    box-shadow: 0 0 0 3px rgba(30, 108, 230, 0.1);
+  }
+  
+  .add-supplier-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 44px;
+    padding: 0 1.5rem;
+    background-color: var(--action-blue);
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+  }
+  
+  .add-supplier-action-btn:hover {
+    background-color: var(--action-blue-hover);
+  }
+  
+  /* ==========================================================================
+     2. Suppliers List & Layout Table Card
+     ========================================================================== */
+  .suppliers-list-data-card {
+    background: var(--card-white-panel);
+    border-radius: var(--radius-standard);
+    box-shadow: var(--shadow-subtle-smooth);
+    border: 1px solid rgba(0, 0, 0, 0.01);
+    overflow: hidden;
+    padding-top: 1.5rem;
+  }
+  
+  .list-card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.75rem 1.25rem 1.75rem;
+  }
+  
+  .heading-left-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .heading-icon {
+    color: var(--action-blue);
+  }
+  
+  .list-card-header-row h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-dark-slate);
+    margin: 0;
+  }
+  
+  .page-meta-counter {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted-gray);
+  }
+  
+  .page-meta-counter span {
+    font-weight: 700;
+    color: var(--action-blue);
+  }
+  
+  .table-responsive-viewport {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .premium-suppliers-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+  
+  .premium-suppliers-data-table th {
+    background-color: #f1f5f9;
+    color: #475569;
+    font-weight: 600;
+    padding: 14px 1.75rem;
+    border-bottom: 1px solid var(--border-slate-tint);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .premium-suppliers-data-table td {
+    padding: 16px 1.75rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+  }
+  
+  .premium-suppliers-data-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .premium-suppliers-data-table tr:hover td {
+    background-color: #f8fafc;
+  }
+  
+  .supplier-id-mono-cell {
+    font-family: monospace;
+    font-weight: 600;
+    color: var(--text-muted-gray);
+  }
+  
+  .supplier-name-bold-cell {
+    font-weight: 600;
+    color: var(--text-dark-slate);
+  }
+  
+  .supplier-phone-cell {
+    color: #334155;
+  }
+  
+  .supplier-address-muted-cell {
+    color: var(--text-muted-gray);
+  }
+  
+  .empty-table-state-cell {
+    text-align: center;
+    padding: 3rem !important;
+    color: var(--text-muted-gray);
+    font-style: italic;
+  }
+  
+  /* ==========================================================================
+     3. Centered Pagination Sheet Footer Controls
+     ========================================================================== */
+  .table-pagination-navigation-footer.centered-layout {
+    display: flex;
+    justify-content: center; /* Absolutely centers the items inside */
+    align-items: center;
+    padding: 1.25rem 1.75rem;
+    border-top: 1px solid var(--border-slate-tint);
+    background-color: #ffffff;
+  }
+  
+  .pagination-action-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .pag-current-indicator {
+    padding: 0 16px;
+    height: 36px;
+    background-color: #eff6ff;
+    color: var(--action-blue);
+    border: 1px solid #bfdbfe;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(30, 108, 230, 0.04);
+  }
+  
+  .pag-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 36px;
+    padding: 0 14px;
+    border: 1px solid var(--border-slate-tint);
+    background: #ffffff;
+    color: var(--text-muted-gray);
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  }
+  
+  .pag-nav-btn:hover:not(:disabled) {
+    color: var(--text-dark-slate);
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+  
+  .pag-nav-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background-color: #f8fafc;
+    box-shadow: none;
+  }
+  
+  /* Responsive Adaptive Viewports */
+  @media (max-width: 992px) {
+    .supplier-inline-form {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .supplier-input-field {
+      width: 100%;
+    }
+    .add-supplier-action-btn {
+      width: 100%;
+    }
+  }

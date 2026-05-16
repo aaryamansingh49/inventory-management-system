@@ -94,6 +94,13 @@ function MainLayout({ children }) {
               </li>
             )}
 
+<li className={isActive("/purchase-history") ? "active" : ""}>
+                <Link to="/purchase-history">
+                  <Truck size={20} />
+                  <span>Purchase History</span>
+                </Link>
+              </li>
+
             <li className={isActive("/inventory") ? "active" : ""}>
               <Link to="/inventory">
                 <Warehouse size={20} />

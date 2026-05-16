@@ -2,10 +2,9 @@ import {
   useEffect,
   useState
 } from "react";
+import { User, Phone, MapPin, Plus, ChevronLeft, ChevronRight, Layers } from "lucide-react";
+import "../styles/suppliers.css";
 
-import "../styles/forms.css";
-import "../styles/table.css";
-import "../styles/dashboard.css";
 
 import MainLayout from "../layouts/MainLayout";
 
@@ -126,234 +125,151 @@ function Suppliers() {
   }, [page]);
 
   return (
-
     <MainLayout>
+      <div className="suppliers-dashboard-wrapper">
+        {/* Large Main Heading */}
+        <div className="suppliers-main-header">
+          <h1>Suppliers</h1>
+        </div>
 
-      <h1
-        style={{
-          marginBottom: "20px"
-        }}
-      >
-
-        Suppliers
-
-      </h1>
-
-      {/* Add Supplier Form */}
-
-      {
-
-        role === "admin" && (
-
-          <div className="dashboard-section">
-
-            <form onSubmit={handleSubmit}>
-
+        {/* Add Supplier Form Card Container */}
+        {role === "admin" && (
+          <div className="supplier-form-card-panel">
+            <h3>Add New Supplier</h3>
+            <form onSubmit={handleSubmit} className="supplier-inline-form">
               {/* Supplier Name */}
-
-              <div className="form-group">
-
-                <input
-                  type="text"
-                  name="supplier_name"
-                  placeholder="Supplier Name"
-                  value={
-                    formData.supplier_name
-                  }
-                  onChange={handleChange}
-                  className="form-input"
-                />
-
+              <div className="supplier-input-field">
+                <label>Supplier Name</label>
+                <div className="input-with-icon-wrapper">
+                  <User size={16} className="field-inner-icon" />
+                  <input
+                    type="text"
+                    name="supplier_name"
+                    placeholder="Acme Corporation"
+                    value={formData.supplier_name}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
               </div>
 
               {/* Phone */}
-
-              <div className="form-group">
-
-                <input
-                  type="text"
-                  name="phone"
-                  placeholder="Phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="form-input"
-                />
-
+              <div className="supplier-input-field">
+                <label>Phone Number</label>
+                <div className="input-with-icon-wrapper">
+                  <Phone size={16} className="field-inner-icon" />
+                  <input
+                    type="text"
+                    name="phone"
+                    placeholder="+1-555-0199"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
               </div>
 
               {/* Address */}
-
-              <div className="form-group">
-
-                <input
-                  type="text"
-                  name="address"
-                  placeholder="Address"
-                  value={formData.address}
-                  onChange={handleChange}
-                  className="form-input"
-                />
-
+              <div className="supplier-input-field field-grow-address">
+                <label>Address</label>
+                <div className="input-with-icon-wrapper">
+                  <MapPin size={16} className="field-inner-icon" />
+                  <input
+                    type="text"
+                    name="address"
+                    placeholder="123 Industrial Way, Springfield"
+                    value={formData.address}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
               </div>
 
-              {/* Submit */}
+              {/* Submit Button */}
+              <button type="submit" className="add-supplier-action-btn">
+                <Plus size={16} />
+                <span>Add Supplier</span>
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* Suppliers List Table Section Container */}
+        <div className="suppliers-list-data-card">
+          <div className="list-card-header-row">
+            <div className="heading-left-box">
+              <Layers size={18} className="heading-icon" />
+              <h2>Suppliers List</h2>
+            </div>
+            <div className="page-meta-counter">
+              Page <span>{page}</span> of <span>{totalPages}</span>
+            </div>
+          </div>
+
+          {/* Responsive Data Grid */}
+          <div className="table-responsive-viewport">
+            <table className="premium-suppliers-data-table">
+              <thead>
+                <tr>
+                  <th>Supplier ID</th>
+                  <th>Supplier Name</th>
+                  <th>Phone Number</th>
+                  <th>Address</th>
+                </tr>
+              </thead>
+              <tbody>
+                {suppliers.length === 0 ? (
+                  <tr>
+                    <td colSpan="4" className="empty-table-state-cell">
+                      No registered suppliers available in this sequence page range.
+                    </td>
+                  </tr>
+                ) : (
+                  suppliers.map((supplier) => (
+                    <tr key={supplier.id}>
+                      <td className="supplier-id-mono-cell">{supplier.id}</td>
+                      <td className="supplier-name-bold-cell">{supplier.supplier_name}</td>
+                      <td className="supplier-phone-cell">{supplier.phone}</td>
+                      <td className="supplier-address-muted-cell">{supplier.address}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Clean Pagination Navigation Panel footer */}
+         {/* Centered Pagination Navigation Footer Layout */}
+         <div className="table-pagination-navigation-footer centered-layout">
+            <div className="pagination-action-controls">
+              <button
+                type="button"
+                className="pag-nav-btn"
+                disabled={page === 1}
+                onClick={() => setPage(page - 1)}
+              >
+                <ChevronLeft size={16} />
+                <span>Prev</span>
+              </button>
+              
+              <div className="pag-current-indicator">
+                Page {page}
+              </div>
 
               <button
-                type="submit"
-                className="primary-btn"
+                type="button"
+                className="pag-nav-btn"
+                disabled={page === totalPages}
+                onClick={() => setPage(page + 1)}
               >
-
-                Add Supplier
-
+                <span>Next</span>
+                <ChevronRight size={16} />
               </button>
-
-            </form>
-
+            </div>
           </div>
-
-        )
-
-      }
-
-      {/* Suppliers Table */}
-
-      <div className="dashboard-section">
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent:
-              "space-between",
-            alignItems: "center",
-            marginBottom: "20px"
-          }}
-        >
-
-          <h2>
-
-            Suppliers List
-
-          </h2>
-
-          <div
-            style={{
-              fontWeight: "bold",
-              color: "#2563eb"
-            }}
-          >
-
-            Page {page} of {totalPages}
-
-          </div>
-
         </div>
-
-        <table className="custom-table">
-
-          <thead>
-
-            <tr>
-
-              <th>ID</th>
-
-              <th>Name</th>
-
-              <th>Phone</th>
-
-              <th>Address</th>
-
-            </tr>
-
-          </thead>
-
-          <tbody>
-
-            {suppliers.map(
-              (supplier) => (
-
-                <tr key={supplier.id}>
-
-                  <td>
-                    {supplier.id}
-                  </td>
-
-                  <td>
-                    {
-                      supplier.supplier_name
-                    }
-                  </td>
-
-                  <td>
-                    {supplier.phone}
-                  </td>
-
-                  <td>
-                    {supplier.address}
-                  </td>
-
-                </tr>
-
-              )
-            )}
-
-          </tbody>
-
-        </table>
-
-        {/* Pagination */}
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "15px",
-            marginTop: "25px"
-          }}
-        >
-
-          <button
-            className="primary-btn"
-            disabled={page === 1}
-            onClick={() =>
-              setPage(page - 1)
-            }
-          >
-
-            Prev
-
-          </button>
-
-          <span
-            style={{
-              fontWeight: "bold"
-            }}
-          >
-
-            Page {page}
-
-          </span>
-
-          <button
-            className="primary-btn"
-            disabled={
-              page === totalPages
-            }
-            onClick={() =>
-              setPage(page + 1)
-            }
-          >
-
-            Next
-
-          </button>
-
-        </div>
-
       </div>
-
     </MainLayout>
-
   );
 
 }
