@@ -606,9 +606,11 @@ This project is more advanced than a basic CRUD application because it includes:
 ---
 ## Demo Credentials
 
+```
 Staff Login
 Email: staff@gmail.com
 Password: 123456
+```
 
 # 👨‍💻 Author
 

@@ -2,10 +2,18 @@ import {
     useEffect,
     useState
   } from "react";
-  import "../styles/forms.css";
+  import "../styles/addProduct.css";
   import { useNavigate } from "react-router-dom";
-  
   import MainLayout from "../layouts/MainLayout";
+  import { 
+    User, 
+    Hash, 
+    AlignLeft, 
+    IndianRupee, 
+    Layers, 
+    Tag, 
+    Plus 
+  } from "lucide-react";
   
   import api from "../services/api";
   
@@ -93,139 +101,115 @@ import {
     }, []);
   
     return (
-
       <MainLayout>
-    
-        <div className="dashboard-section">
-    
-          <h1
-            style={{
-              marginBottom: "20px"
-            }}
-          >
-            Add Product
-          </h1>
-    
-          <form onSubmit={handleSubmit}>
-    
-            {/* Product Name */}
-    
-            <div className="form-group">
-    
-              <input
-                type="text"
-                name="name"
-                placeholder="Product Name"
-                onChange={handleChange}
-                className="form-input"
-              />
-    
+        <div className="form-page-container">
+          <div className="form-card">
+            <div className="form-header">
+              <h1>Add Product</h1>
+              <p>Create a new entry in your digital warehouse</p>
             </div>
-    
-            {/* SKU */}
-    
-            <div className="form-group">
-    
-              <input
-                type="text"
-                name="sku"
-                placeholder="SKU"
-                onChange={handleChange}
-                className="form-input"
-              />
-    
-            </div>
-    
-            {/* Description */}
-    
-            <div className="form-group">
-    
-              <textarea
-                name="description"
-                placeholder="Description"
-                onChange={handleChange}
-                className="form-input"
-                rows="4"
-              />
-    
-            </div>
-    
-            {/* Price */}
-    
-            <div className="form-group">
-    
-              <input
-                type="number"
-                name="price"
-                placeholder="Price"
-                onChange={handleChange}
-                className="form-input"
-              />
-    
-            </div>
-    
-            {/* Stock */}
-    
-            <div className="form-group">
-    
-              <input
-                type="number"
-                name="stock"
-                placeholder="Stock"
-                onChange={handleChange}
-                className="form-input"
-              />
-    
-            </div>
-    
-            {/* Category */}
-    
-            <div className="form-group">
-    
-              <select
-                name="category_id"
-                onChange={handleChange}
-                className="form-input"
-              >
-    
-                <option value="">
-                  Select Category
-                </option>
-    
-                {categories.map((category) => (
-    
-                  <option
-                    key={category.id}
-                    value={category.id}
-                  >
-    
-                    {category.category_name}
-    
-                  </option>
-    
-                ))}
-    
-              </select>
-    
-            </div>
-    
-            {/* Submit Button */}
-    
-            <button
-              type="submit"
-              className="primary-btn"
-            >
-    
-              Add Product
-    
-            </button>
-    
-          </form>
-    
+  
+            <form onSubmit={handleSubmit} className="product-form">
+              <div className="form-grid">
+                {/* Product Name */}
+                <div className="input-group">
+                  <label>Product Name</label>
+                  <div className="input-wrapper">
+                    <User className="input-icon" size={18} />
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="e.g., Wireless Mouse"
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+  
+                {/* Price */}
+                <div className="input-group">
+                  <label>Price</label>
+                  <div className="input-wrapper">
+                    <IndianRupee className="input-icon" size={18} />
+                    <input
+                      type="number"
+                      name="price"
+                      placeholder="e.g., 29.99"
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+  
+                {/* SKU */}
+                <div className="input-group">
+                  <label>SKU</label>
+                  <div className="input-wrapper">
+                    <Hash className="input-icon" size={18} />
+                    <input
+                      type="text"
+                      name="sku"
+                      placeholder="e.g., WM-1234"
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+  
+                {/* Stock */}
+                <div className="input-group">
+                  <label>Stock Quantity</label>
+                  <div className="input-wrapper">
+                    <Layers className="input-icon" size={18} />
+                    <input
+                      type="number"
+                      name="stock"
+                      placeholder="e.g., 150"
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+  
+                {/* Description - Full Width */}
+                <div className="input-group full-width">
+                  <label>Description</label>
+                  <div className="input-wrapper textarea-wrapper">
+                    <AlignLeft className="input-icon top-icon" size={18} />
+                    <textarea
+                      name="description"
+                      placeholder="Enter product specifications and details..."
+                      onChange={handleChange}
+                      rows="4"
+                    />
+                  </div>
+                </div>
+  
+                {/* Category */}
+                <div className="input-group full-width">
+                  <label>Category</label>
+                  <div className="input-wrapper">
+                    <Tag className="input-icon" size={18} />
+                    <select name="category_id" onChange={handleChange} required>
+                      <option value="">Select Category</option>
+                      {categories.map((cat) => (
+                        <option key={cat.id} value={cat.id}>
+                          {cat.category_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+  
+              <button type="submit" className="submit-action-btn">
+                <Plus size={20} />
+                <span>Add Product</span>
+              </button>
+            </form>
+          </div>
         </div>
-    
       </MainLayout>
-    
     );
   
   }

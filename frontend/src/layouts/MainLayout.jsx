@@ -1,8 +1,20 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { 
+  LayoutDashboard, 
+  Box, 
+  PlusCircle, 
+  ShoppingCart, 
+  Users, 
+  Truck, 
+  Warehouse, 
+  LogOut,
+  Package2
+} from "lucide-react";
 import "../styles/layout.css";
 
 function MainLayout({ children }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const user = JSON.parse(
     localStorage.getItem("user")
   );
@@ -18,109 +30,92 @@ function MainLayout({ children }) {
     navigate("/login");
   };
 
-  return (
+  const isActive = (path) => location.pathname === path;
 
+  return (
     <div className="layout">
-  
       {/* Sidebar */}
-  
-      <div className="sidebar">
-  
-        <h2>Inventory System</h2>
-  
-        <hr />
-  
-        <ul>
-  
-          <li>
-            <Link to="/dashboard">
-              Dashboard
-            </Link>
-          </li>
-  
-          <li>
-            <Link to="/products">
-              Products
-            </Link>
-          </li>
-  
-          {
-            role === "admin" && (
-  
-              <li>
+      <aside className="sidebar">
+        <div className="sidebar-brand">
+          <div className="brand-icon">
+            <Package2 size={28} color="#45d7e8" />
+          </div>
+          <div className="brand-text">
+            <span>INS</span>
+            <p>Inventory Management System</p>
+          </div>
+        </div>
+
+        <nav className="sidebar-nav">
+          <ul>
+            <li className={isActive("/dashboard") ? "active" : ""}>
+              <Link to="/dashboard">
+                <LayoutDashboard size={20} />
+                <span>Dashboard</span>
+              </Link>
+            </li>
+
+            <li className={isActive("/products") ? "active" : ""}>
+              <Link to="/products">
+                <Box size={20} />
+                <span>Products</span>
+              </Link>
+            </li>
+
+            {role === "admin" && (
+              <li className={isActive("/add-product") ? "active" : ""}>
                 <Link to="/add-product">
-                  Add Product
+                  <PlusCircle size={20} />
+                  <span>Add Product</span>
                 </Link>
               </li>
-  
-            )
-          }
-  
-          <li>
-            <Link to="/orders">
-              Orders
-            </Link>
-          </li>
-  
-          <li>
-            <Link to="/suppliers">
-              Suppliers
-            </Link>
-          </li>
-   
-     {
-       role === "admin" && (
-    
-          <li>
-            <Link to="/purchases">
-              Purchases
-            </Link>
-          </li>
-  )
+            )}
 
-}
-  
-          <li>
-            <Link to="/inventory">
-              Inventory
-            </Link>
-          </li>
-  
-        </ul>
-  
-        <button
-          onClick={handleLogout}
-          className="logout-btn"
-        >
-  
-          Logout
-  
-        </button>
-  
-      </div>
-  
-      {/* Main Content */}
-  
-      <div className="main-content">
-  
-        {/* Navbar */}
-  
-        <div className="navbar">
-  
-          <h2>
-            Inventory Dashboard
-          </h2>
-  
+            <li className={isActive("/orders") ? "active" : ""}>
+              <Link to="/orders">
+                <ShoppingCart size={20} />
+                <span>Orders</span>
+              </Link>
+            </li>
+
+            <li className={isActive("/suppliers") ? "active" : ""}>
+              <Link to="/suppliers">
+                <Users size={20} />
+                <span>Suppliers</span>
+              </Link>
+            </li>
+
+            {role === "admin" && (
+              <li className={isActive("/purchases") ? "active" : ""}>
+                <Link to="/purchases">
+                  <Truck size={20} />
+                  <span>Purchases</span>
+                </Link>
+              </li>
+            )}
+
+            <li className={isActive("/inventory") ? "active" : ""}>
+              <Link to="/inventory">
+                <Warehouse size={20} />
+                <span>Inventory</span>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+
+        <div className="sidebar-footer">
+          <button onClick={handleLogout} className="logout-btn">
+            <LogOut size={20} />
+            <span>Logout</span>
+          </button>
         </div>
-  
-        {/* Page Content */}
-  
+      </aside>
+
+      {/* Main Content */}
+      <main className="main-content">
         {children}
-  
-      </div>
-  
+      </main>
     </div>
-  
   );
 }
 
