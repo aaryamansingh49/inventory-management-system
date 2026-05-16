@@ -238,8 +238,7 @@ function Suppliers() {
             </table>
           </div>
 
-          {/* Clean Pagination Navigation Panel footer */}
-         {/* Centered Pagination Navigation Footer Layout */}
+      
          <div className="table-pagination-navigation-footer centered-layout">
             <div className="pagination-action-controls">
               <button
