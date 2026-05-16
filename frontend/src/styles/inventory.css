@@ -1,0 +1,188 @@
+/* Custom Inventory Color Matrix Tokens */
+:root {
+    --bg-app-canvas: #f1f5f9;
+    --bg-surface-card: #ffffff;
+    --border-subtle: #e2e8f0;
+    
+    --text-primary-slate: #0f172a;
+    --text-secondary-slate: #1e293b;
+    --text-muted-gray: #64748b;
+    
+    /* Primary Actions & Navigation Accent */
+    --action-blue-primary: #1e6ce6;
+    --action-blue-hover: #1656b8;
+  
+    /* Badge Custom Colors */
+    --badge-sale-green: #10b981;
+    --badge-purchase-red: #ef4444;
+  }
+  
+  /* Base Wrapper View Configuration */
+  .inventory-view-framework {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-primary-slate);
+  }
+  
+  .inventory-main-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary-slate);
+    margin: 0 0 1.5rem 0;
+    letter-spacing: -0.02em;
+  }
+  
+  /* Rounded Surface Box Layout Panel styling */
+  .inventory-card-panel {
+    background: var(--bg-surface-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02), 0 4px 12px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    padding: 0.5rem;
+  }
+  
+  /* Tabular Layout Configurations */
+  .inventory-table-scroll-wrapper {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .inventory-history-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.925rem;
+  }
+  
+  .inventory-history-data-table th {
+    color: var(--text-muted-gray);
+    font-weight: 700;
+    padding: 1.1rem 1.5rem;
+    font-size: 0.775rem;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border-subtle);
+    background-color: #ffffff;
+  }
+  
+  .inventory-history-data-table td {
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: middle;
+    background-color: #ffffff;
+    color: var(--text-secondary-slate);
+  }
+  
+  .inventory-history-data-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .inventory-history-data-table tr:hover td {
+    background-color: #f8fafc;
+  }
+  
+  /* Unique Typography Cells Variants */
+  .id-tracking-label {
+    font-weight: 500;
+    color: var(--text-muted-gray);
+  }
+  
+  .product-title-bold {
+    font-weight: 500;
+    color: var(--text-primary-slate);
+  }
+  
+  .quantity-counter-cell {
+    font-weight: 500;
+    color: var(--text-secondary-slate);
+  }
+  
+  .timestamp-data-label {
+    color: var(--text-muted-gray);
+    font-size: 0.9rem;
+  }
+  
+  /* Custom Action Pill Badges Elements */
+  .badge-action-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 6px;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+    min-width: 90px;
+  }
+  
+  .badge-action-pill.sale-pill {
+    background-color: var(--badge-sale-green);
+  }
+  
+  .badge-action-pill.purchase-pill {
+    background-color: var(--badge-purchase-red);
+  }
+  
+  .inventory-empty-fallback {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-muted-gray);
+    font-style: italic;
+  }
+  
+  /* Centered Layout Navigation Pagination Blocks Styles */
+  .inventory-pagination-footer-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.25rem 1rem 0.75rem 1rem;
+    background-color: #ffffff;
+  }
+  
+  .pagination-controls-cluster {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .pagination-nav-arrow-btn {
+    height: 36px;
+    padding: 0 1.25rem;
+    background-color: var(--action-blue-primary);
+    color: #ffffff;
+    border: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, opacity 0.15s ease;
+  }
+  
+  .pagination-nav-arrow-btn:hover:not(:disabled) {
+    background-color: var(--action-blue-hover);
+  }
+  
+  .pagination-nav-arrow-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  
+  .pagination-current-step-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary-slate);
+  }
+  
+  /* Layout Responsiveness Adaptations */
+  @media (max-width: 768px) {
+    .inventory-view-framework {
+      padding: 1rem;
+    }
+    .inventory-history-data-table th, 
+    .inventory-history-data-table td {
+      padding: 1rem 0.75rem;
+    }
+  }
