@@ -185,17 +185,15 @@ Inventory_Management/
 
 ---
 
-# 🔐 Authentication System
+# 🔐Authentication & Security Features
 
-The project uses JWT-based authentication.
-
-## Features
-
-* Secure Login
+* JWT Authentication
 * Password Hashing
 * Token-based Authentication
-* Protected Routes
+* Protected APIs & Routes
 * Role-Based Authorization
+* Rate Limiting
+* Secure Middleware Structure
 
 ---
 
@@ -396,20 +394,7 @@ Redis is used for:
 * Faster API Responses
 * Reduced Database Load
 
----
 
-# 🔐 Security Features
-
-## Implemented Security
-
-* JWT Authentication
-* Password Hashing
-* Protected APIs
-* Role-Based Authorization
-* Rate Limiting
-* Secure Middleware Structure
-
----
 
 # 🗄️ Database Tables
 
